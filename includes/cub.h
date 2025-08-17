@@ -3,21 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+        */
+/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/16 14:53:25 by kotasakatsu      ###   ########.fr       */
+/*   Updated: 2025/08/18 00:52:31 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
-#define CUB_H
+# define CUB_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
+# include "libft.h"
+# include "mlx.h"
+# include <X11/X.h>
+# include <X11/Xlib.h>
+# include <X11/keysym.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <fcntl.h>
+
+
 
 typedef struct s_game
 {
