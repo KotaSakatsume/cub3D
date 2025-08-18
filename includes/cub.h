@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/18 00:52:31 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/18 17:10:20 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "mlx.h"
+# include <stdbool.h>
 # include <X11/X.h>
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
@@ -24,7 +25,21 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
+
+//mlb用の画像ファイル保管場所
+typedef struct s_img
+{
+    void            *mlx_img;
+    char            *addr;
+    int                width;
+    int                height;
+    int                bpp;
+    int                line_len;
+    int                endian;
+}                    t_img;
 
 typedef struct s_game
 {
@@ -53,7 +68,16 @@ typedef struct s_game
     void        *mlx;
     void        *win;
 
+    //以下新構造体、私の担当部分で作成します。
+    t_img        *north_img;    //mkuida
+    t_img        *south_img;    //mkuida
+    t_img        *east_img;    //mkuida
+    t_img        *west_img;    //mkuida
+	
 }   t_game;
 
+
+//raycaster
+void	set_mlx_hook(t_game *game);
 
 #endif

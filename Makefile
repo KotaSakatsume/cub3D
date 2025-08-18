@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/18 01:26:19 by mkuida           ###   ########.fr        #
+#    Updated: 2025/08/18 17:12:44 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,15 @@ OBJ_PARSER_DIR = $(OBJ_DIR)/parser
 SRCS_PARSER = $(addprefix $(SRC_PARSER_DIR)/, $(SRC_PARSER))
 OBJS_PARSER = $(SRCS_PARSER:$(SRC_PARSER_DIR)/%.c=$(OBJ_PARSER_DIR)/%.o)
 
-#tie up
-SRCS = $(SRCS_MAIN) $(SRCS_PARSER)
-OBJS = $(OBJS_MAIN) $(OBJS_PARSER)
+SRC_RAYCASTER = set_mlx_hook.c
+SRC_RAYCASTER_DIR = $(SRC_DIR)/raycaster
+OBJ_RAYCASTER_DIR = $(OBJ_DIR)/raycaster
+SRCS_RAYCASTER = $(addprefix $(SRC_RAYCASTER_DIR)/, $(SRC_RAYCASTER))
+OBJS_RAYCASTER = $(SRCS_RAYCASTER:$(SRC_RAYCASTER_DIR)/%.c=$(OBJ_RAYCASTER_DIR)/%.o)
 
+#tie up
+SRCS = $(SRCS_MAIN) $(SRCS_PARSER) $(SRCS_RAYCASTER)
+OBJS = $(OBJS_MAIN) $(OBJS_PARSER) $(OBJS_RAYCASTER)
 
 # **************************************************************************** #
 #			define:action													   #
@@ -74,6 +79,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_PARSER_DIR)
+	mkdir -p $(OBJ_RAYCASTER_DIR)
 
 # build libft
 $(LIBFT):
