@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/18 17:20:51 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/19 01:07:21 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,79 +43,6 @@
 
 
 //以下、mkuidaの記述部分
-
-//1 2 4 8 16 32 64 128
-int set_rgb(int *dest, int red,int green,int blue)
-{
-	if(red < 0 || red > 255)
-		return (1);
-	if(green < 0 || green > 255)
-		return (1);
-	if(blue < 0 || blue > 255)
-		return (1);
-
-	*dest = 0;
-	*dest += red;
-	*dest += (green << 8);
-	*dest += (blue << 16);
-	return (0);
-}
-
-int set_test(t_game *game)
-{
-	//set_texture
-	game->north_texture = "./tesxtures/north.xpm";
-	game->south_texture = "./tesxtures/south.xpm";
-	game->east_texture = "./tesxtures/east.xpm";
-	game->west_texture = "./tesxtures/west.xpm";
-
-	if(set_rgb(&(game->floor_color),255,0,0) == 1)
-		return (1);
-	// printf("floor_color = %d\n",game->floor_color);
-	if(set_rgb(&(game->ceiling_color),0,255,0) == 1)
-		return (1);
-	// printf("ceiling_color = %d\n",game->ceiling_color);
-	
-	//set minilib
-	game->mlx = NULL;
-	game->win = NULL;
-
-	game->north_img = NULL;
-	game->south_img = NULL;
-	game->east_img = NULL;
-	game->west_img = NULL;
-
-	//set player
-		//位置
-	game->player_pos_x = 0;
-	game->player_pos_y = 0;
-		//向き
-	game->player_dir_x = 0;
-	game->player_dir_y = 0;
-		//視覚幅
-	game->player_plane_x = 0;
-	game->player_plane_y = 0;
-	return (0);
-}
-
-int check_texture(t_game *game)
-{
-	game->mlx = mlx_init();
-	if(game->mlx == NULL)
-	{
-		perror("mlx_init");
-		//exitでいいか確認
-		exit(EXIT_FAILURE);
-	}
-	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT,"cub3D");
-	if (game->win == NULL)
-	{
-		perror("mlx_new_window");
-		exit(EXIT_FAILURE);
-	}
-	return (0);
-}
-
 int main()
 {
 	t_game game;
@@ -128,7 +55,7 @@ int main()
 	}
 
 	//xpm形式のtexture確認＆読み込み
-	if(check_texture(&game) == 1)
+	if(set_texture(&game) == 1)
 	{
 		printf("error : check_texture\n");
 		return (1);

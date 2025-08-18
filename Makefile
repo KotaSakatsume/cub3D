@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/18 17:12:44 by mkuida           ###   ########.fr        #
+#    Updated: 2025/08/19 01:02:36 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,9 @@ OBJ_PARSER_DIR = $(OBJ_DIR)/parser
 SRCS_PARSER = $(addprefix $(SRC_PARSER_DIR)/, $(SRC_PARSER))
 OBJS_PARSER = $(SRCS_PARSER:$(SRC_PARSER_DIR)/%.c=$(OBJ_PARSER_DIR)/%.o)
 
-SRC_RAYCASTER = set_mlx_hook.c
+SRC_RAYCASTER =	set_test.c\
+				set_mlx_hook.c\
+				set_texture.c
 SRC_RAYCASTER_DIR = $(SRC_DIR)/raycaster
 OBJ_RAYCASTER_DIR = $(OBJ_DIR)/raycaster
 SRCS_RAYCASTER = $(addprefix $(SRC_RAYCASTER_DIR)/, $(SRC_RAYCASTER))

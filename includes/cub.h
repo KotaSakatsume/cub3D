@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/18 17:10:20 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/19 01:10:17 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,19 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+#define EXIT_FAILURE 1
 
+//map関連の情報まとめ
+typedef struct s_map
+{
+    char        **map; // 二次元配列でマップを保持
+    int         width;
+    int         height;
+    int         player_x; //yoko
+    int         player_y; //tate
+    char        player_dir;
+
+}   t_map; 
 
 //mlb用の画像ファイル保管場所
 typedef struct s_img
@@ -43,10 +55,16 @@ typedef struct s_img
 
 typedef struct s_game
 {
-    // マップ情報へのポインタ
-    char        **map_data;
-    int         map_width;
-    int         map_height;
+
+	// ★　↓いったんコメントアウトで変更前残しつつ変更
+    // // マップ情報へのポインタ
+    // char        **map_data;
+    // int         map_width;
+    // int         map_height;
+	//　★　↑ここまで
+
+	//　いったん以下に変更
+	t_map		map_data;
 
     // プレイヤー情報
     double      player_pos_x;
@@ -78,6 +96,8 @@ typedef struct s_game
 
 
 //raycaster
+int		set_test(t_game *game);
 void	set_mlx_hook(t_game *game);
+int		set_texture(t_game *game);
 
 #endif
