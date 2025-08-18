@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/18 17:07:42 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/18 17:20:51 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 //     return (0);
 // }
 
+
+//以下、mkuidaの記述部分
 
 //1 2 4 8 16 32 64 128
 int set_rgb(int *dest, int red,int green,int blue)
@@ -114,25 +116,28 @@ int check_texture(t_game *game)
 	return (0);
 }
 
-
-
 int main()
 {
 	t_game game;
+	
+	//test条件設定
 	if(set_test(&game) == 1)
 	{
 		printf("error : set_test\n");
 		return (1);
 	}
+
+	//xpm形式のtexture確認＆読み込み
 	if(check_texture(&game) == 1)
 	{
 		printf("error : check_texture\n");
 		return (1);
 	}
 
+	//hookの設定
 	set_mlx_hook(&game);
+
+	//画面描画ループ
 	mlx_loop(game.mlx);
 	return (0);
-
-	return 0;
 }
