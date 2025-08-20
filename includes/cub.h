@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
+/*   By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/19 01:10:17 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/20 18:04:08 by kotasakatsu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define CUB_H
 
 # include "libft.h"
-# include "mlx.h"
+// # include "mlx.h"
 # include <stdbool.h>
-# include <X11/X.h>
-# include <X11/Xlib.h>
-# include <X11/keysym.h>
+// # include <X11/X.h>
+// # include <X11/Xlib.h>
+// # include <X11/keysym.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -99,5 +99,10 @@ typedef struct s_game
 int		set_test(t_game *game);
 void	set_mlx_hook(t_game *game);
 int		set_texture(t_game *game);
+
+//parser
+
+//inti_game
+void inti_game(t_game *game);
 
 #endif
