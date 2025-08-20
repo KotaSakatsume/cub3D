@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inti_game.c                                        :+:      :+:    :+:   */
+/*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:56:32 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/20 18:22:22 by kotasakatsu      ###   ########.fr       */
+/*   Updated: 2025/08/20 19:36:04 by kotasakatsu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void inti_game(t_game *game)
+void init_map(t_map *map)
 {
+    // マップの初期化
+    map->map = NULL; // マップデータは後で読み込む
+    map->width = 0;
+    map->height = 0;
+    map->player_x = -1; // 初期値は無効な位置
+    map->player_y = -1; // 初期値は無効な位置
+    map->player_dir = 'N'; // 初期方向は北
+}
+
+void init_game(t_game *game)
+{
+    
     // ゲームの初期化
     game -> player_pos_x = 0.0;
     game -> player_pos_y = 0.0;
@@ -30,4 +42,5 @@ void inti_game(t_game *game)
     game -> mlx = NULL;
     game -> win = NULL;
     
+    init_map(&game->map_data);
 }

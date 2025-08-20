@@ -6,7 +6,7 @@
 /*   By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/20 18:01:59 by kotasakatsu      ###   ########.fr       */
+/*   Updated: 2025/08/20 19:54:54 by kotasakatsu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,36 @@ void error_exit(char *message)
     exit(1);
 }
 
+int check_extension(const char *filename, const char *extension)
+{
+	(void)extension;
+	printf("test:%s\n", filename);
+	
+	
+	return(1);
+
+}
+
 int main(int argc, char **argv)
 {
     t_game  game;
-	
-	inti_game(&game);
+	(void)argv; // 引数は使用しない場合の警告回避
+
 
     // 1. 引数のチェック
     if (argc != 2)
-        return (error_exit("Usage: ./cub3d <map.cub>"), 1);
+        return (error_exit("Usage: ./cub3d <map.cub>\n"), 1);
     if (!check_extension(argv[1], ".cub"))
-        return (error_exit("File must have .cub extension"), 1);
+        return (error_exit("File must have .cub extension\n"), 1);
+	
+	//2.構造体初期化
+	init_game(&game);
+	
+    // 3. パース処理の開始
+    // if (!parse_file(&game, argv[1]))
+    //     return (1); // parse_file内でエラーメッセージは出力済み
 
-    // 2. パース処理の開始
-    if (!parse_file(&game, argv[1]))
-        return (1); // parse_file内でエラーメッセージは出力済み
-
-    // 3. ゲームの初期化と実行
+    // 4. ゲームの初期化と実行
     // init_game(&game);
     // run_game(&game);
     

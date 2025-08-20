@@ -6,7 +6,7 @@
 /*   By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/20 18:04:08 by kotasakatsu      ###   ########.fr       */
+/*   Updated: 2025/08/20 19:35:47 by kotasakatsu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ int		set_texture(t_game *game);
 //parser
 
 //inti_game
-void inti_game(t_game *game);
+void init_game(t_game *game);
 
 #endif
