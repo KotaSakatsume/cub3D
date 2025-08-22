@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/22 12:33:11 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:40:05 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int	check_extension(const char *filename, const char *extension)
 
 int	main(int argc, char **argv)
 {
-	t_game	game;
+	t_game	*game;
 
 	if (argc != 2)
 		return (error_exit("Usage: ./cub3d <map.cub>\n"), 1);
 	if (!check_extension(argv[1], ".cub"))
 		return (error_exit("File must have .cub extension\n"), 1);
 	// 2.構造体初期化
-	init_game(&game);
+	init_game(game);
 	// 3. パース処理の開始
-	// if (!parse_file(&game, argv[1]))
-	//     return (1); // parse_file内でエラーメッセージは出力済み
+	if (!parse_file(game, argv[1]))
+		return (1); // parse_file内でエラーメッセージは出力済み
 	// 4. ゲームの初期化と実行
 	// init_game(&game);
 	// run_game(&game);
