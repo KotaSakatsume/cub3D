@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/19 01:07:21 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/25 20:43:23 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 //     // 3. ゲームの初期化と実行
 //     init_game(&game);
 //     run_game(&game);
-    
+
 //     return (0);
 // }
 
@@ -53,6 +53,7 @@ int main()
 		printf("error : set_test\n");
 		return (1);
 	}
+	printf("end : set_test\n");
 
 	//xpm形式のtexture確認＆読み込み
 	if(set_texture(&game) == 1)
@@ -60,9 +61,12 @@ int main()
 		printf("error : check_texture\n");
 		return (1);
 	}
+	printf("end : set_texture\n");
+
 
 	//hookの設定
 	set_mlx_hook(&game);
+	printf("end : set_mlx_hook\n");
 
 	//画面描画ループ
 	mlx_loop(game.mlx);

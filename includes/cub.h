@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/19 01:10:17 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/25 20:28:20 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <math.h>
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -33,13 +34,36 @@
 typedef struct s_map
 {
     char        **map; // 二次元配列でマップを保持
-    int         width;
-    int         height;
+    int         width;    //x
+    int         height;   //y
     int         player_x; //yoko
     int         player_y; //tate
-    char        player_dir;
+    char        player_dir;//N S E W
 
 }   t_map; 
+
+typedef struct s_line_draw
+{
+	//初期条件
+	double		rayX;
+	double		rayY;
+
+	double		cameraX;
+
+	//結果
+	int			draw_wall_start; //
+	int			draw_wall_end; //
+	int			wall_height; //
+
+	char		wall_side;//
+
+	int			hit_X;	//
+	int			hit_Y;	//
+
+	double		distinct; //
+	
+	double		hit_point; //0~1
+}	t_line_draw;
 
 //mlb用の画像ファイル保管場所
 typedef struct s_img
