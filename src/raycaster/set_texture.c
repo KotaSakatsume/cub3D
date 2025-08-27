@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/27 13:24:46 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:36:00 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,50 @@ static void set_start_player_posi(t_game *game)
 	set_pp(game);
 }
 
-void print_tex(t_game *game, t_line_draw *line, t_img *img, int X)
+static void print_wall_color(t_game *game, t_line_draw *line, t_img *img,int X)
 {
-	for (int y = 0; y < line->draw_wall_start; y++)
-		my_mlx_pixel_put(img, X, y,game->ceiling_color);
-	// wall
+	t_img *original_data;
+
+	if(line -> wall_side == 'w')
+		original_data = &game->west_img;
+	else if(line -> wall_side == 'n')
+		original_data = &game->north_img;
+	else if(line -> wall_side == 'e')
+		original_data = &game->east_img;
+	else if(line -> wall_side == 's')
+		original_data = &game->south_img;
+	else
+	{
+		printf("originaldata error\n");
+		exit(1);
+	}
+	
+	int test = original_data->width;
+	int original_x = (int)(line->hit_point)*(original_data->width);
+	int wall_color;
+
 	for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
 	{
-		my_mlx_pixel_put(img, X, y, 0x00FFFF00);
+		int original_y = (int)(original_data->height)*((y - (line->draw_wall_start))/(line->draw_wall_end));
+		wall_color = my_mlx_pixel_get(original_data, original_x, original_y);
+		my_mlx_pixel_put(img, X, y, wall_color);
 	}
+}
+
+void print_tex(t_game *game, t_line_draw *line, t_img *img, int X)
+{
+	//ceil
+	for (int y = 0; y < line->draw_wall_start; y++)
+		my_mlx_pixel_put(img, X, y,game->ceiling_color);
+
+	// wall
+	print_wall_color(game,line,img,X);
+
+	
+	// for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
+	// {
+	// 	my_mlx_pixel_put(img, X, y, 0x00FFFF00);
+	// }
 	// floor (fixed test color)
 	for (int y = (line->draw_wall_end + 1); y < WINDOW_HEIGHT; y++)
 		my_mlx_pixel_put(img, X, y, game->floor_color);

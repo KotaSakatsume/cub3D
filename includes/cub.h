@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/27 12:40:24 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 18:31:21 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ typedef struct s_game
     void        *win;
 
     //以下新構造体、私の担当部分で作成します。
-    t_img        *north_img;    //mkuida
-    t_img        *south_img;    //mkuida
-    t_img        *east_img;    //mkuida
-    t_img        *west_img;    //mkuida
+    t_img        north_img;    //mkuida
+    t_img        south_img;    //mkuida
+    t_img        east_img;    //mkuida
+    t_img        west_img;    //mkuida
 	
 }   t_game;
 
@@ -146,6 +146,7 @@ void	print_line(t_line_draw *line, int X);
 
 //raycaster_my_mlx.c
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+int		my_mlx_pixel_get(t_img *data, int x, int y);
 
 //raycaster_set_mlx_hook.c
 void	set_mlx_hook(t_game *game);
