@@ -40,7 +40,8 @@ static void set_hitpoint(t_game *game, t_line_draw *line)
 		(line->hit_point) = (game->player_pos_y) + ((line->distinct)*(line->rayY));
 	else
 		(line->hit_point) = (game->player_pos_x) + ((line->distinct)*(line->rayX));
-	(line->hit_point) = floor((line->hit_point));
+	(line->hit_point) = (line->hit_point) - floor((line->hit_point));
+	printf("hit_point = %f\n",line->hit_point);
 }
 
 static void set_draw_wall_info(t_line_draw *line)
