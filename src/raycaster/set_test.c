@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 01:00:44 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/26 01:04:40 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 10:11:13 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,11 @@ static int set_rgb(int *dest, int red,int green,int blue)
 		return (1);
 
 	*dest = 0;
-	*dest += red;
+	*dest += blue;
 	*dest += (green << 8);
-	*dest += (blue << 16);
+	*dest += (red << 16);
 	return (0);
 }
-
 
 int set_test(t_game *game)
 {
