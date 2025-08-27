@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/27 11:51:15 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 12:20:10 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,21 @@ typedef struct s_map
 typedef struct s_line_draw
 {
 	//初期条件
+	double		cameraX;
 	double		rayX;
 	double		rayY;
+
+	//中間条件
 	double		deltaX;
 	double		deltaY;
 
-	double		cameraX;
+	int stepX;
+	int stepY;
+	int tileX;
+	int tileY;
+
+	double nextXtime;
+	double nextYtime;
 
 	//結果
 	int			draw_wall_start; //
@@ -124,24 +133,26 @@ typedef struct s_game
 
 //raycaster
 
+//raycaster_init_line.c
+void	init_line(t_line_draw *line, int X, t_game *game);
+
+//raycaster_line_asset.c
+void	set_line_by_DDA(t_game *game, t_line_draw *line);
+void	print_line(t_line_draw *line, int X);
+
+//raycaster_my_mlx.c
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+
+//raycaster_set_mlx_hook.c
+void	set_mlx_hook(t_game *game);
+
 //raycaster_set_test.c
 int		set_test(t_game *game);
-
-//raycaster_mlx_hook.c
-void	set_mlx_hook(t_game *game);
 
 //raycaster_set_textur.c
 int		set_texture(t_game *game);
 
 //raycaster_set_xml_imgs_wall_data.c
 int		set_xml_imgs_wall_data(t_game *game);
-
-//raycaster_set_line.c
-void	init_line(t_line_draw *line, int X, t_game *game);
-void	set_line_by_DDA(t_game *game, t_line_draw *line);
-void	print_line(t_line_draw *line, int X);
-
-//raycaster_my_mlx.c
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 
 #endif

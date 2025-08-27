@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/27 10:55:08 by mkuida           ###   ########.fr        #
+#    Updated: 2025/08/27 12:16:57 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ OBJ_PARSER_DIR = $(OBJ_DIR)/parser
 SRCS_PARSER = $(addprefix $(SRC_PARSER_DIR)/, $(SRC_PARSER))
 OBJS_PARSER = $(SRCS_PARSER:$(SRC_PARSER_DIR)/%.c=$(OBJ_PARSER_DIR)/%.o)
 
-SRC_RAYCASTER =	line_asset.c\
+SRC_RAYCASTER =	init_line.c\
+				line_asset.c\
 				my_mlx.c\
 				set_mlx_hook.c\
 				set_test.c\
