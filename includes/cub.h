@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/27 23:20:30 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 01:12:05 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define ROTATE_SPEED_DEGREE 1
+#define MOVE_SPEED 1
 #define EXIT_FAILURE 1
 
 //map関連の情報まとめ

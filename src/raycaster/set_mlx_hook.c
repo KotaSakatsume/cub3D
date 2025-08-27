@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:15:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 01:02:05 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 01:23:17 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,57 @@ static int	rotate_player_right(t_game *game)
 	return (0);
 }
 
+static int move_w_player(t_game *game)
+{
+	double move_speed = 0.1 * MOVE_SPEED;
+
+	(game->player_pos_x) = (game->player_pos_x) + (game->player_dir_x) * move_speed;
+	(game->player_pos_y) = (game->player_pos_y) + (game->player_dir_y) * move_speed;
+	set_start_vision(game);
+	return (0);
+}
+
+static int move_a_player(t_game *game)
+{
+	double move_speed = 0.1 * MOVE_SPEED;
+
+	(game->player_pos_x) = (game->player_pos_x) + (game->player_dir_y) * move_speed;
+	(game->player_pos_y) = (game->player_pos_y) - (game->player_dir_x) * move_speed;
+	set_start_vision(game);
+	return (0);
+}
+
+static int move_s_player(t_game *game)
+{
+	double move_speed = 0.1 * MOVE_SPEED;
+
+	(game->player_pos_x) = (game->player_pos_x) - (game->player_dir_x) * move_speed;
+	(game->player_pos_y) = (game->player_pos_y) - (game->player_dir_y) * move_speed;
+	set_start_vision(game);
+	return (0);
+}
+
+static int move_d_player(t_game *game)
+{
+	double move_speed = 0.1 * MOVE_SPEED;
+
+	(game->player_pos_x) = (game->player_pos_x) - (game->player_dir_y) * move_speed;
+	(game->player_pos_y) = (game->player_pos_y) + (game->player_dir_x) * move_speed;
+	set_start_vision(game);
+	return (0);
+}
+
 static int	key_handle(int keysym, t_game *game)
 {
-	// if (keysym == (int) 's' && data->state == PLAYING)
-	// 	move_player(data, 1, 0);
-	// else if (keysym == (int) 'a' && data->state == PLAYING)
-	// 	move_player(data, 0, -1);
-	// else if (keysym == (int) 'w' && data->state == PLAYING)
-	// 	move_player(data, -1, 0);
-	// else if (keysym == (int) 'd' && data->state == PLAYING)
-	// 	move_player(data, 0, 1);
-	if (keysym == XK_Left)
+	if (keysym == (int) 'w')
+		move_w_player(game);
+	else if (keysym == (int) 'a')
+		move_a_player(game);
+	else if (keysym == (int) 's')
+		move_s_player(game);
+	else if (keysym == (int) 'd')
+		move_d_player(game);
+	else if (keysym == XK_Left)
 		rotate_player_left(game);
 	else if (keysym == XK_Right)
 		rotate_player_right(game);
