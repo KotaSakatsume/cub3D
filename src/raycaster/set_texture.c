@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/27 19:19:43 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 22:43:00 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	start_mlx(t_game *game)
 	return (0);
 }
 
-void set_pp(t_game *game)
+static void set_pp(t_game *game)
 {
 	double FOV = 90.0;
 	double player_plane_length = tan( M_PI * (FOV/2) / 180 );
@@ -95,16 +95,16 @@ static void print_wall_color(t_game *game, t_line_draw *line, t_img *img,int X)
 	
 	int test = original_data->width;
 	int original_x = (line->hit_point)*(original_data->width);
-	printf("hit_point = %f : original_width = %d : original_x = %d\n",line->hit_point, original_data->width , original_x);
+	// printf("hit_point = %f : original_width = %d : original_x = %d\n",line->hit_point, original_data->width , original_x);
 	int wall_color;
 
 	for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
 	{
 		double y_raito;
 		y_raito = ((double)(y - (line->draw_wall_start))/(line->wall_height));
-		printf("y_raito = %f\n",y_raito);
+		// printf("y_raito = %f\n",y_raito);
 		int original_y = (original_data->height)*(y_raito);
-		printf("original_x = %d : original_y = %d\n",original_x,original_y);
+		// printf("original_x = %d : original_y = %d\n",original_x,original_y);
 		wall_color = my_mlx_pixel_get(original_data, original_x, original_y);
 		my_mlx_pixel_put(img, X, y, wall_color);
 	}

@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/27 18:31:21 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 23:20:30 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+#define ROTATE_SPEED_DEGREE 1
 #define EXIT_FAILURE 1
 
 //map関連の情報まとめ
@@ -156,6 +157,7 @@ int		set_test(t_game *game);
 
 //raycaster_set_textur.c
 int		set_texture(t_game *game);
+void	set_start_vision(t_game *game);
 
 //raycaster_set_xml_imgs_wall_data.c
 int		set_xml_imgs_wall_data(t_game *game);

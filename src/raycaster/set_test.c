@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 01:00:44 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/27 10:11:13 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 23:12:48 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ int set_test(t_game *game)
 	game->mlx = NULL;
 	game->win = NULL;
 
-	game->north_img = NULL;
-	game->south_img = NULL;
-	game->east_img = NULL;
-	game->west_img = NULL;
+	// game->north_img = NULL;
+	// game->south_img = NULL;
+	// game->east_img = NULL;
+	// game->west_img = NULL;
 
 	//set player
 		//位置
