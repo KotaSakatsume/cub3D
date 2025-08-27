@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/27 12:20:10 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/27 12:40:24 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_line_draw
 	double nextYtime;
 
 	//結果
+	int 		hit_side;
 	int			draw_wall_start; //
 	int			draw_wall_end; //
 	int			wall_height; //
@@ -132,6 +133,9 @@ typedef struct s_game
 
 
 //raycaster
+
+//raycaster_DDA.c
+void	DDA(t_line_draw *line, t_game *game);
 
 //raycaster_init_line.c
 void	init_line(t_line_draw *line, int X, t_game *game);

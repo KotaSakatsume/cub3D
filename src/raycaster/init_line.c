@@ -62,6 +62,7 @@ void init_line(t_line_draw *line, int X, t_game *game)
 	init_line_middle(line,game);
 
 	//for ans
+	line->hit_side = -1;
 	line->draw_wall_start = -1;
 	line->draw_wall_end = -1;
 	line->wall_height = -1;
