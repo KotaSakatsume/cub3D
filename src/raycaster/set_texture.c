@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 13:33:51 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 15:01:24 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void set_start_player_posi(t_game *game)
 	set_pp(game);
 }
 
-static void print_wall_color(t_game *game, t_line_draw *line, t_img *img,int X)
+static void print_wall_color(t_game *game, t_linedraw *line, t_img *img,int X)
 {
 	t_img *original_data;
 	int test = original_data->width;
@@ -126,7 +126,7 @@ static void print_wall_color(t_game *game, t_line_draw *line, t_img *img,int X)
 	}
 }
 
-void print_tex(t_game *game, t_line_draw *line, t_img *img, int X)
+void print_tex(t_game *game, t_linedraw *line, t_img *img, int X)
 {
 	//ceil
 	for (int y = 0; y < line->draw_wall_start; y++)
@@ -148,7 +148,7 @@ void print_tex(t_game *game, t_line_draw *line, t_img *img, int X)
 void set_start_vision(t_game *game)
 {
 	int X = 0;
-	t_line_draw line;
+	t_linedraw line;
 	t_img img;
 	img.mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	img.addr = mlx_get_data_addr(img.mlx_img, &img.bpp, &img.line_len, &img.endian);

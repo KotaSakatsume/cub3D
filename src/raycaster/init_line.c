@@ -20,7 +20,7 @@ static double set_delta(double ray)
 		return(fabs(1/ray));
 }
 
-static void init_line_middle(t_line_draw *line,t_game *game)
+static void init_line_middle(t_linedraw *line,t_game *game)
 {
 	line->deltaX = set_delta(line->rayX);
 	line->deltaY = set_delta(line->rayY);
@@ -50,7 +50,7 @@ static void init_line_middle(t_line_draw *line,t_game *game)
 	}
 }
 
-void init_line(t_line_draw *line, int X, t_game *game)
+void init_line(t_linedraw *line, int X, t_game *game)
 {
 	//for situation
 	line->cameraX = ((2.0 * X) / (WINDOW_WIDTH-1) - 1.0); // 1~-1の倍率

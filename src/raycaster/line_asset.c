@@ -12,7 +12,7 @@
 
 #include "cub.h"
 
-static void set_distinct_and_wallside(t_game *game, t_line_draw *line)
+static void set_distinct_and_wallside(t_game *game, t_linedraw *line)
 {
 	if((line->hit_side) == 0)
 	{
@@ -34,7 +34,7 @@ static void set_distinct_and_wallside(t_game *game, t_line_draw *line)
 	}
 }
 
-static void set_hitpoint(t_game *game, t_line_draw *line)
+static void set_hitpoint(t_game *game, t_linedraw *line)
 {
 	if((line->hit_side) == 0)
 	{
@@ -56,7 +56,7 @@ static void set_hitpoint(t_game *game, t_line_draw *line)
 	// printf("hit_point = %f\n",line->hit_point);
 }
 
-static void set_draw_wall_info(t_line_draw *line)
+static void set_draw_wall_info(t_linedraw *line)
 {
 	(line->draw_wall_start) = (-(line->wall_height) / 2) + (WINDOW_HEIGHT/2);
 	if((line->draw_wall_start) < 0)
@@ -66,7 +66,7 @@ static void set_draw_wall_info(t_line_draw *line)
 		(line->draw_wall_end) = WINDOW_HEIGHT - 1;
 }
 
-static void set_line_param(t_game *game, t_line_draw *line)
+static void set_line_param(t_game *game, t_linedraw *line)
 {
 	set_distinct_and_wallside(game, line);
 	set_hitpoint(game, line);
@@ -81,14 +81,14 @@ static void set_line_param(t_game *game, t_line_draw *line)
 	(line->hit_Y) = (line->tileY);
 }
 
-void set_line_by_DDA(t_game *game, t_line_draw *line)
+void set_line_by_DDA(t_game *game, t_linedraw *line)
 {	
 	DDA(line,game);
 	set_line_param(game,line);
 	return;
 }
 
-void print_line(t_line_draw *line, int X)
+void print_line(t_linedraw *line, int X)
 {
 	printf("print line start: X = %d\n",X);
 	//初期条件
