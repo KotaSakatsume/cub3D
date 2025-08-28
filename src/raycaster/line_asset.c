@@ -37,9 +37,21 @@ static void set_distinct_and_wallside(t_game *game, t_line_draw *line)
 static void set_hitpoint(t_game *game, t_line_draw *line)
 {
 	if((line->hit_side) == 0)
+	{
 		(line->hit_point) = (game->player_pos_y) + ((line->distinct)*(line->rayY));
+		if((line->hit_point) < 0.0)
+			(line->hit_point) = 0;
+		else if((line->hit_point) > 1)
+			(line->hit_point) -= 1.0;
+	}
 	else
+	{
 		(line->hit_point) = (game->player_pos_x) + ((line->distinct)*(line->rayX));
+		if((line->hit_point) < 0.0)
+			(line->hit_point) = 0;
+		else if((line->hit_point) > 1)
+			(line->hit_point) -= 1.0;
+	}
 	(line->hit_point) = (line->hit_point) - floor((line->hit_point));
 	// printf("hit_point = %f\n",line->hit_point);
 }

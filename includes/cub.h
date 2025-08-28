@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/28 02:04:57 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 14:30:35 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,10 @@ void	print_line(t_line_draw *line, int X);
 //raycaster_my_mlx.c
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
 int		my_mlx_pixel_get(t_img *data, int x, int y);
+
+//raycaster_ray_util.c
+int		max(int x, int y);
+int		min(int x, int y);
 
 //raycaster_set_mlx_hook.c
 void	set_mlx_hook(t_game *game);
