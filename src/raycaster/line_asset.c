@@ -81,9 +81,9 @@ static void set_line_param(t_game *game, t_linedraw *line)
 	(line->hit_Y) = (line->tileY);
 }
 
-void set_line_by_DDA(t_game *game, t_linedraw *line)
+void set_line_by_dda(t_game *game, t_linedraw *line)
 {	
-	DDA(line,game);
+	dda(line,game);
 	set_line_param(game,line);
 	return;
 }

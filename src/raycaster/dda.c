@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:39:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 14:58:59 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 15:11:01 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	check_hit_wall(t_map *map, int X, int Y)
 	return (false);
 }
 
-void	DDA(t_linedraw *line, t_game *game)
+void	dda(t_linedraw *line, t_game *game)
 {
 	int	hit;
 

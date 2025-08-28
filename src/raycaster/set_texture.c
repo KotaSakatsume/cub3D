@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 15:01:24 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 15:12:12 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void set_start_vision(t_game *game)
 		// printf("A\n");
 		init_line(&line, X, game);
 		// printf("B\n");
-		set_line_by_DDA(game,&line);
+		set_line_by_dda(game,&line);
 		// printf("C\n");
 		// ceiling (fixed test color)
 		print_tex(game,&line,&img, X);
