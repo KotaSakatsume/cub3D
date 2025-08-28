@@ -19,18 +19,18 @@ static void set_distinct_and_wallside(t_game *game, t_line_draw *line)
 		(line->distinct) = ((line->tileX) - (game->player_pos_x)) + ((1- (line->stepX)) / 2);
 		(line->distinct) = (line->distinct) / (line->rayX); //gyogann
 		if(line->rayX > 0)
-			(line -> wall_side) = 'w';
-		else
 			(line -> wall_side) = 'e';
+		else
+			(line -> wall_side) = 'w';
 	}
 	else
 	{
 		(line->distinct) = ((line->tileY) - (game->player_pos_y)) + ((1- (line->stepY)) / 2);
 		(line->distinct) = (line->distinct) / (line->rayY); //gyogann
 		if(line->rayY > 0)
-			(line -> wall_side) = 'n';
-		else
 			(line -> wall_side) = 's';
+		else
+			(line -> wall_side) = 'n';
 	}
 }
 

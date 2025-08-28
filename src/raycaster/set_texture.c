@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 02:42:27 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 13:33:51 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,39 @@ static void set_start_player_posi(t_game *game)
 static void print_wall_color(t_game *game, t_line_draw *line, t_img *img,int X)
 {
 	t_img *original_data;
+	int test = original_data->width;
+	int original_x;
+	original_x = (line->hit_point)*(original_data->width);
 
+	
 	if(line -> wall_side == 'w')
+	{
 		original_data = &game->west_img;
+		original_x = (1.0 - (line->hit_point)) * (original_data->width);
+	}
 	else if(line -> wall_side == 'n')
+	{
 		original_data = &game->north_img;
+		original_x = (line->hit_point) * (original_data->width);
+	}
 	else if(line -> wall_side == 'e')
+	{
 		original_data = &game->east_img;
+		original_x = (line->hit_point) * (original_data->width);
+	}
 	else if(line -> wall_side == 's')
+	{
 		original_data = &game->south_img;
+		original_x = (1.0 - (line->hit_point)) * (original_data->width);
+	}
 	else
 	{
 		printf("originaldata error\n");
 		exit(1);
 	}
 	
-	int test = original_data->width;
-	int original_x = (line->hit_point)*(original_data->width);
+	// int test = original_data->width;
+	// int original_x = (line->hit_point)*(original_data->width);
 	// printf("hit_point = %f : original_width = %d : original_x = %d\n",line->hit_point, original_data->width , original_x);
 	int wall_color;
 
