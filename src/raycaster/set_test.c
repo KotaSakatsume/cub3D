@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 01:00:44 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/27 23:12:48 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 11:43:05 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int set_map(t_map *map_data)
 		"111111111111111",
 		"101000000000001",
 		"100111011111101",
-		"10N000000000001",
+		"100000000000001",
 		"101011111110101",
 		"100000000000001",
 		"111111111111111"
@@ -54,8 +54,8 @@ static int set_map(t_map *map_data)
 	}
 
 	// 確認出力
-	// for (int y = 0; y < map_data->height; y++)
-	// 	printf("%s\n", map_data->map[y]);
+	for (int y = 0; y < map_data->height; y++)
+		printf("%s\n", map_data->map[y]);
 
 	return (0);
 }

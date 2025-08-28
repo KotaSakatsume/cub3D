@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/27 22:43:00 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 02:42:27 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void print_tex(t_game *game, t_line_draw *line, t_img *img, int X)
 {
 	//ceil
 	for (int y = 0; y < line->draw_wall_start; y++)
-		my_mlx_pixel_put(img, X, y,game->ceiling_color);
+		my_mlx_pixel_put(img, X, y, game->ceiling_color);
 
 	// wall
 	print_wall_color(game,line,img,X);
@@ -166,6 +166,7 @@ int set_texture(t_game *game)
 	set_start_player_posi(game);
 	printf("end : set_texture : set_player\n");
 
+	//in loop yobidasiteru
 	set_start_vision(game);
 	printf("end : set_texture : set_start_vision\n");
 

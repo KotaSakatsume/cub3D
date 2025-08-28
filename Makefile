@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/27 18:13:39 by mkuida           ###   ########.fr        #
+#    Updated: 2025/08/28 02:04:48 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,8 @@ SRCS_PARSER = $(addprefix $(SRC_PARSER_DIR)/, $(SRC_PARSER))
 OBJS_PARSER = $(SRCS_PARSER:$(SRC_PARSER_DIR)/%.c=$(OBJ_PARSER_DIR)/%.o)
 
 SRC_RAYCASTER =	DDA.c\
+				hook_move_player.c\
+				hook_rotate_player.c\
 				init_line.c\
 				line_asset.c\
 				my_mlx.c\

@@ -14,9 +14,9 @@
 
 static bool check_out_map(t_map *map, int X, int Y)
 {
-	if(X < 0 || Y < 0)
+	if(X < -1 || Y < -1)
 		return (true);
-	if(X >= (map->width) || Y >= (map->height))
+	if(X > (map->width) || Y > (map->height))
 		return (true);
 	return(false);
 }

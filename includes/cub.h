@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/28 01:12:05 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 02:04:57 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,16 @@ typedef struct s_game
 
 //raycaster_DDA.c
 void	DDA(t_line_draw *line, t_game *game);
+
+//raycaster_hook_move_player.c
+int		move_w_player(t_game *game);
+int		move_a_player(t_game *game);
+int		move_s_player(t_game *game);
+int		move_d_player(t_game *game);
+
+//raycaster_hook_ritate_player.c
+int		rotate_player_left(t_game *game);
+int		rotate_player_right(t_game *game);
 
 //raycaster_init_line.c
 void	init_line(t_line_draw *line, int X, t_game *game);
