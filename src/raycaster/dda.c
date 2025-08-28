@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   DDA.c                                              :+:      :+:    :+:   */
+/*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:39:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 15:30:22 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 16:20:12 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static bool	check_out_map(t_map *map, t_linedraw *line)
+static bool check_out_map(t_map *map, t_linedraw *line)
 {
 	int x;
 	int y;
@@ -26,24 +26,24 @@ static bool	check_out_map(t_map *map, t_linedraw *line)
 	return (false);
 }
 
-static bool	check_hit_wall(t_map *map, int X, int Y)
+static bool check_hit_wall(t_map *map, int X, int Y)
 {
 	if (map->map[Y][X] == '1')
 		return (true);
 	return (false);
 }
 
-static void	out_map(t_game *game, t_linedraw *line)
+static void out_map(t_game *game, t_linedraw *line)
 {
-	(void) *game;
+	(void)*game;
 	printf("error : out  map\n");
 	printf("(line->tileX) = %d , (line->tileY) = %d\n", (line->tileX), (line->tileY));
 	exit(1);
 }
 
-void	dda(t_linedraw *line, t_game *game)
+void dda(t_linedraw *line, t_game *game)
 {
-	int	hit;
+	int hit;
 
 	hit = 0;
 	while (hit == 0)
@@ -61,9 +61,9 @@ void	dda(t_linedraw *line, t_game *game)
 			(line->hit_side) = 1;
 		}
 		if (check_out_map(&(game->map_data), line) == true)
-			out_map(game,line);
+			out_map(game, line);
 		if (check_hit_wall(&(game->map_data), (line->tileX),
-				(line->tileY)) == true)
+						   (line->tileY)) == true)
 			hit = 1;
 	}
 }
