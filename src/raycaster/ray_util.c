@@ -6,23 +6,23 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:26:49 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 14:26:49 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 16:54:18 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int max(int x, int y)
+int	max(int x, int y)
 {
-	if(x >= y)
+	if (x >= y)
 		return (x);
 	else
 		return (y);
 }
 
-int min(int x, int y)
+int	min(int x, int y)
 {
-	if(x >= y)
+	if (x >= y)
 		return (y);
 	else
 		return (x);

@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:15:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 02:03:20 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/08/28 16:55:39 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	handle_close(t_game *game)
 	// free_map(data->map);
 	// free(data);
 	// exit(0);
-	exit (0);
+	exit(0);
 }
 
 static int	expose_hook(t_game *game)
@@ -58,10 +58,10 @@ static int	key_handle(int keysym, t_game *game)
 	return (0);
 }
 
-
 void	set_mlx_hook(t_game *game)
 {
 	mlx_hook(game->win, Expose, ExposureMask, &expose_hook, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &handle_close,game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &handle_close,
+		game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_handle, game);
 }
