@@ -6,17 +6,18 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/22 17:40:05 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:59:43 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	error_exit(char *message)
+void	error_exit(char *message, t_game *game)
 {
 	write(2, "Error\n", 6);
 	if (message)
 		write(2, message, strlen(message));
+	free(game);
 	exit(1);
 }
 
@@ -36,18 +37,22 @@ int	main(int argc, char **argv)
 {
 	t_game	*game;
 
+	game = (t_game *)malloc(sizeof(t_game));
 	if (argc != 2)
-		return (error_exit("Usage: ./cub3d <map.cub>\n"), 1);
+		return (error_exit("Usage: ./cub3d <map.cub>\n", game), 1);
 	if (!check_extension(argv[1], ".cub"))
-		return (error_exit("File must have .cub extension\n"), 1);
+		return (error_exit("File must have .cub extension\n", game), 1);
 	// 2.構造体初期化
+	if (!game)
+		error_exit("Memory allocation failed\n", game);
 	init_game(game);
 	// 3. パース処理の開始
 	if (!parse_file(game, argv[1]))
 		return (1); // parse_file内でエラーメッセージは出力済み
-	// 4. ゲームの初期化と実行
-	// init_game(&game);
-	// run_game(&game);
+					// 4. ゲームの初期化と実行
+					// init_game(&game);
+					// run_game(&game);
+	free(game);
 	return (0);
 }
 
