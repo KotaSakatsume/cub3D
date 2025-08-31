@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+         #
+#    By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/20 19:35:32 by kotasakatsu      ###   ########.fr        #
+#    Updated: 2025/08/31 17:55:57 by kosakats         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,91 +14,67 @@
 #			define:core														   #
 # **************************************************************************** #
 
-# define core
-NAME = cub3D
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+# **************************************************************************** #
+#                                   Core                                       #
+# **************************************************************************** #
+NAME    = cub3D
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
-#library
+# Library
 LIBFT_DIR = $(SRC_DIR)/libft_added_ftprintf
-LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT     = $(LIBFT_DIR)/libft.a
 
-# MINILIBX_DIR = ./minilibx-linux
-# MINILIBX = $(MINILIBX_DIR)/libmlx.a
-
-#include(LDFLAG_kakuninhituyou)
-#INCLUDES = -I includes -I $(MINILIBX_DIR) -I $(LIBFT_DIR)/includes
-#LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MINILIBX_DIR) -lmlx -L/usr/local/lib -lXext -lX11 -lm
-
-#kosakats test
+# Includes & Flags
 INCLUDES = -I includes -I $(LIBFT_DIR)/includes
-LDFLAGS = -L$(LIBFT_DIR)
+LDFLAGS  = -L$(LIBFT_DIR)
 
 # **************************************************************************** #
-#			define:srcs&objs												   #
+#                                Sources & Objects                             #
 # **************************************************************************** #
 
-#src_files
-SRC_MAIN = main.c 
-SRCS_MAIN = $(addprefix $(SRC_DIR)/, $(SRC_MAIN))
-OBJS_MAIN = $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# Main
+SRC_MAIN      = main.c
+SRCS_MAIN     = $(addprefix $(SRC_DIR)/, $(SRC_MAIN))
+OBJS_MAIN     = $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-SRC_PARSER = parser.c \
-			init_game.c
-SRC_PARSER_DIR = $(SRC_DIR)/parser
-OBJ_PARSER_DIR = $(OBJ_DIR)/parser
-SRCS_PARSER = $(addprefix $(SRC_PARSER_DIR)/, $(SRC_PARSER))
-OBJS_PARSER = $(SRCS_PARSER:$(SRC_PARSER_DIR)/%.c=$(OBJ_PARSER_DIR)/%.o)
+# Parser
+SRC_PARSER    = parser.c \
+                init_game.c \
+                get_next_line/get_next_line.c \
+                get_next_line/get_next_line_utils.c \
+				ft_split.c
 
-# SRC_RAYCASTER =	set_test.c\
-# 				set_mlx_hook.c\
-# 				set_texture.c
-# SRC_RAYCASTER_DIR = $(SRC_DIR)/raycaster
-# OBJ_RAYCASTER_DIR = $(OBJ_DIR)/raycaster
-# SRCS_RAYCASTER = $(addprefix $(SRC_RAYCASTER_DIR)/, $(SRC_RAYCASTER))
-# OBJS_RAYCASTER = $(SRCS_RAYCASTER:$(SRC_RAYCASTER_DIR)/%.c=$(OBJ_RAYCASTER_DIR)/%.o)
+SRCS_PARSER   = $(addprefix $(SRC_DIR)/parser/, $(SRC_PARSER))
+OBJS_PARSER   = $(SRCS_PARSER:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-#tie up
-SRCS = $(SRCS_MAIN) $(SRCS_PARSER) $(SRCS_RAYCASTER)
-OBJS = $(OBJS_MAIN) $(OBJS_PARSER) $(OBJS_RAYCASTER)
+# (Raycasterはコメントアウト中)
+# SRCS_RAYCASTER = ...
+# OBJS_RAYCASTER = ...
+
+# Tie up
+SRCS = $(SRCS_MAIN) $(SRCS_PARSER)
+OBJS = $(OBJS_MAIN) $(OBJS_PARSER)
 
 # **************************************************************************** #
-#			define:action													   #
+#                                   Rules                                      #
 # **************************************************************************** #
-
-#define
 .PHONY: all clean fclean re
 
-# defo
 all: $(NAME)
 
-# bild
-$(NAME): $(MINILIBX) $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LDFLAGS)
 
-# make obj
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+# Compile rule with automatic directory creation
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# make obj file
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-	mkdir -p $(OBJ_PARSER_DIR)
-	mkdir -p $(OBJ_RAYCASTER_DIR)
-
-# build libft
 $(LIBFT):
 	make -C $(LIBFT_DIR)
-
-# MINILIBX
-# $(MINILIBX):
-# 	@if [ ! -d $(MINILIBX_DIR) ]; then \
-# 		echo "MINILIBX not found. Cloning..."; \
-# 		git clone https://github.com/42Paris/minilibx-linux.git $(MINILIBX_DIR); \
-# 	fi
-# 	@make -C $(MINILIBX_DIR)
 
 clean:
 	make clean -C $(LIBFT_DIR)
@@ -107,6 +83,6 @@ clean:
 fclean: clean
 	make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
-	rm -rf $(MINILIBX_DIR)
 
 re: fclean all
+

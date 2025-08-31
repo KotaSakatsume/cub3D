@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:56:32 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/22 12:07:08 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/08/31 17:57:58 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	init_game(t_game *game)
 	game->south_texture = NULL;
 	game->east_texture = NULL;
 	game->west_texture = NULL;
-	game->floor_color = 0x000000;   // 黒色
-	game->ceiling_color = 0xFFFFFF; // 白色
+	game->floor_color = -1;   // 黒色
+	game->ceiling_color = -1; // 白色
 	game->mlx = NULL;
 	game->win = NULL;
 	init_map(&game->map_data);

@@ -6,11 +6,37 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:02:17 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/30 16:54:44 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/08/31 19:59:44 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+// ================= Utility =================
+
+static char	*process_line(char *line)
+{
+	size_t	len;
+
+	len = strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+	return (line);
+}
+
+static const char	*skip_spaces(const char *s)
+{
+	while (*s == ' ' || *s == '\t')
+		s++;
+	return (s);
+}
+
+// ================= Map Helper =================
 
 int	is_map_line(char *line)
 {
@@ -29,36 +55,85 @@ int	is_map_line(char *line)
 	}
 	return (1);
 }
-static char	*process_line(char *line)
-{
-	size_t	len;
 
-	len = strlen(line);
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
-	return (line);
+void	add_map_line(t_map *map, const char *line)
+{
+	char	**new_map;
+	int		i;
+
+	new_map = malloc(sizeof(char *) * (map->height + 2));
+	if (!new_map)
+		error_exit("Malloc failed for map", NULL);
+	i = 0;
+	while (i < map->height)
+	{
+		new_map[i] = map->map[i];
+		i++;
+	}
+	new_map[i] = strdup(line);
+	if (!new_map[i])
+		error_exit("Malloc failed for map line", NULL);
+	new_map[i + 1] = NULL;
+	free(map->map);
+	map->map = new_map;
+	map->height++;
 }
 
-// 行追加用関数（動的に拡張）+ NULL終端対応
+void	normalize_map(t_map *map)
+{
+	int		i;
+	int		max_len;
+	int		len;
+	char	*new_line;
+	int		j;
+
+	max_len = 0;
+	for (i = 0; i < map->height; i++)
+	{
+		len = strlen(map->map[i]);
+		if (len > max_len)
+			max_len = len;
+	}
+	for (i = 0; i < map->height; i++)
+	{
+		len = strlen(map->map[i]);
+		if (len < max_len)
+		{
+			new_line = malloc(max_len + 1);
+			if (!new_line)
+				error_exit("Malloc failed in normalize_map", NULL);
+			for (j = 0; j < len; j++)
+				new_line[j] = map->map[i][j];
+			for (; j < max_len; j++)
+				new_line[j] = ' ';
+			new_line[max_len] = '\0';
+			free(map->map[i]);
+			map->map[i] = new_line;
+		}
+	}
+	map->width = max_len;
+}
+
+// ================= File Reading =================
+
 char	**add_line(char **file_content, int *count, int *capacity, char *line)
 {
-	int		new_capacity;
 	char	**new_content;
+	int		i;
+	int		new_capacity;
 
-	// NULLなら終端追加
 	if (line == NULL)
 	{
 		file_content[*count] = NULL;
 		return (file_content);
 	}
-	// 容量不足なら拡張
 	if (*count >= *capacity)
 	{
 		new_capacity = (*capacity == 0) ? 10 : (*capacity * 2);
 		new_content = malloc(sizeof(char *) * new_capacity);
 		if (!new_content)
 			return (NULL);
-		for (int i = 0; i < *count; i++)
+		for (i = 0; i < *count; i++)
 			new_content[i] = file_content[i];
 		free(file_content);
 		file_content = new_content;
@@ -74,10 +149,10 @@ char	**add_line(char **file_content, int *count, int *capacity, char *line)
 char	**read_file(t_game *game, char *filename)
 {
 	char	**file_content;
+	char	*line;
 	int		count;
 	int		capacity;
 	int		fd;
-	char	*line;
 
 	file_content = NULL;
 	count = 0;
@@ -95,7 +170,6 @@ char	**read_file(t_game *game, char *filename)
 		free(line);
 		line = get_next_line(fd);
 	}
-	// NULL終端を追加
 	file_content = add_line(file_content, &count, &capacity, NULL);
 	if (!file_content)
 		error_exit("Malloc failed\n", game);
@@ -103,62 +177,110 @@ char	**read_file(t_game *game, char *filename)
 	return (file_content);
 }
 
+// ================= Config Parsing =================
+
+void	parse_texture(t_game *game, const char *path, char **texture_path)
+{
+	int	fd;
+
+	if (*texture_path != NULL)
+		error_exit("Duplicate texture definition", game);
+	if (!path || *path == '\0')
+		error_exit("Missing texture path", game);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error_exit("Texture file not found", game);
+	close(fd);
+	*texture_path = strdup(path);
+	if (!*texture_path)
+		error_exit("Malloc failed for texture path", game);
+}
+
+void	parse_color(t_game *game, const char *color_str, int *color)
+{
+	char	**rgb;
+
+	int r, g, b, i;
+	if (*color != -1)
+		error_exit("Duplicate color definition", game);
+	rgb = ft_split(color_str, ',');
+	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
+		error_exit("Invalid color format", game);
+	r = atoi(rgb[0]);
+	g = atoi(rgb[1]);
+	b = atoi(rgb[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		error_exit("Color values out of range", game);
+	*color = (r << 16) | (g << 8) | b;
+	i = 0;
+	while (rgb[i])
+	{
+		free(rgb[i]);
+		i++;
+	}
+	free(rgb);
+}
+
+void	parse_config_line(t_game *game, const char *line)
+{
+	line = skip_spaces(line);
+	if (*line == '\0')
+		return ;
+	if (strncmp(line, "NO", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
+		parse_texture(game, skip_spaces(line + 2), &game->north_texture);
+	else if (strncmp(line, "SO", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
+		parse_texture(game, skip_spaces(line + 2), &game->south_texture);
+	else if (strncmp(line, "WE", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
+		parse_texture(game, skip_spaces(line + 2), &game->west_texture);
+	else if (strncmp(line, "EA", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
+		parse_texture(game, skip_spaces(line + 2), &game->east_texture);
+	else if (*line == 'F' && (line[1] == ' ' || line[1] == '\t'))
+		parse_color(game, skip_spaces(line + 1), &game->floor_color);
+	else if (*line == 'C' && (line[1] == ' ' || line[1] == '\t'))
+		parse_color(game, skip_spaces(line + 1), &game->ceiling_color);
+	else if (is_map_line((char *)line))
+		add_map_line(&game->map_data, line);
+	else
+		error_exit("Unknown identifier in config file", game);
+}
+
+// ================= Main Parse =================
+
 int	parse_file(t_game *game, char *filename)
 {
 	char	**file_content;
 	int		i;
+	int		y;
 
-	// 1. ファイルを読み込み、内容を文字列の配列として取得
-	file_content = read_file(game, filename); // read_fileはchar**を返すように修正
+	i = 0;
+	file_content = read_file(game, filename);
 	if (!file_content)
 		return (0);
+	while (file_content[i] != NULL)
+	{
+		parse_config_line(game, file_content[i]);
+		i++;
+	}
+	normalize_map(&game->map_data);
+	printf("NO : %s\n", game->north_texture);
+	printf("SO : %s\n", game->south_texture);
+	printf("WE : %s\n", game->west_texture);
+	printf("EA : %s\n", game->east_texture);
+	printf("F  : %d\n", game->floor_color);
+	printf("C  : %d\n", game->ceiling_color);
+	y = 0;
+	while (y < game->map_data.height)
+	{
+		printf("%s\n", game->map_data.map[y]);
+		y++;
+	}
+	// メモリ解放
 	i = 0;
 	while (file_content[i] != NULL)
 	{
-		printf("%s\n", file_content[i]);
+		free(file_content[i]);
 		i++;
 	}
-	// 2. シーン要素とマップデータをパース
-	// if (!parse_content(game, file_content))
-	// {
-	// 	// parse_content内でエラー処理が行われている
-	// 	// メモリを解放してから終了
-	// 	free_file_content(file_content);
-	// 	return (0);
-	// }
-	// // 3. パース後の検証
-	// if (!validate_map(game))
-	// {
-	// 	// validate_map内でエラー処理が行われている
-	// 	// メモリを解放してから終了
-	// 	free_file_content(file_content);
-	// 	return (0);
-	// }
-	// // 全て成功したらメモリを解放して1を返す
-	// free_file_content(file_content);
+	free(file_content);
 	return (1);
 }
-
-// int	is_map_line(char *line); // ここに作った関数の宣言
-
-// int	main(void)
-// {
-// 	size_t	i;
-
-// 	char *tests[] = {
-// 		"1111",
-// 		"1001",
-// 		"1N01",
-// 		"1 0 1",
-// 		"1234", // NG
-// 		"abc",  // NG
-// 		"",     // NG
-// 		NULL    // NG
-// 	};
-// 	for (i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
-// 	{
-// 		printf("Test %zu: \"%s\" -> %d\n", i, tests[i] ? tests[i] : "NULL",
-// 			is_map_line(tests[i]));
-// 	}
-// 	return (0);
-// }
