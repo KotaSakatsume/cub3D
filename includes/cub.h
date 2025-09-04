@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kotasakatsume <kotasakatsume@student.42    +#+  +:+       +#+        */
+/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/20 19:35:47 by kotasakatsu      ###   ########.fr       */
+/*   Updated: 2025/08/31 17:56:38 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,93 +16,107 @@
 # include "libft.h"
 // # include "mlx.h"
 # include <stdbool.h>
-// # include <X11/X.h>
+// # include <X11/X.h
 // # include <X11/Xlib.h>
 // # include <X11/keysym.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <fcntl.h>
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
-#define EXIT_FAILURE 1
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
+# define EXIT_FAILURE 1
 
-//map関連の情報まとめ
+// map関連の情報まとめ
 typedef struct s_map
 {
-    char        **map; // 二次元配列でマップを保持
-    int         width;
-    int         height;
-    int         player_x; //yoko
-    int         player_y; //tate
-    char        player_dir;
+	char **map; // 二次元配列でマップを保持
+	int		width;
+	int		height;
+	int player_x; // yoko
+	int player_y; // tate
+	char	player_dir;
 
-}   t_map; 
+}			t_map;
 
-//mlb用の画像ファイル保管場所
+// mlb用の画像ファイル保管場所
 typedef struct s_img
 {
-    void            *mlx_img;
-    char            *addr;
-    int                width;
-    int                height;
-    int                bpp;
-    int                line_len;
-    int                endian;
-}                    t_img;
+	void	*mlx_img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}			t_img;
 
 typedef struct s_game
 {
-
 	// ★　↓いったんコメントアウトで変更前残しつつ変更
-    // // マップ情報へのポインタ
-    // char        **map_data;
-    // int         map_width;
-    // int         map_height;
+	// // マップ情報へのポインタ
+	// char        **map_data;
+	// int         map_width;
+	// int         map_height;
 	//　★　↑ここまで
 
 	//　いったん以下に変更
-	t_map		map_data;
+	t_map	map_data;
 
-    // プレイヤー情報
-    double      player_pos_x;
-    double      player_pos_y;
-    double      player_dir_x;
-    double      player_dir_y;
-    double      player_plane_x;
-    double      player_plane_y;
+	// プレイヤー情報
+	double	player_pos_x;
+	double	player_pos_y;
+	double	player_dir_x;
+	double	player_dir_y;
+	double	player_plane_x;
+	double	player_plane_y;
 
-    // テクスチャと色情報
-    char        *north_texture;
-    char        *south_texture;
-    char        *east_texture;
-    char        *west_texture;
-    int         floor_color; // 例: RGB値をまとめた整数
-    int         ceiling_color;
+	// テクスチャと色情報
+	char	*north_texture;
+	char	*south_texture;
+	char	*east_texture;
+	char	*west_texture;
+	int floor_color; // 例: RGB値をまとめた整数
+	int		ceiling_color;
 
-    // MiniLibX関連
-    void        *mlx;
-    void        *win;
+	// MiniLibX関連
+	void	*mlx;
+	void	*win;
 
-    //以下新構造体、私の担当部分で作成します。
-    t_img        *north_img;    //mkuida
-    t_img        *south_img;    //mkuida
-    t_img        *east_img;    //mkuida
-    t_img        *west_img;    //mkuida
-	
-}   t_game;
+	//以下新構造体、私の担当部分で作成します。
+	t_img *north_img; // mkuida
+	t_img *south_img; // mkuida
+	t_img *east_img;  // mkuida
+	t_img *west_img;  // mkuida
 
+}			t_game;
 
-//raycaster
-int		set_test(t_game *game);
-void	set_mlx_hook(t_game *game);
-int		set_texture(t_game *game);
+// raycaster
+int			set_test(t_game *game);
+void		set_mlx_hook(t_game *game);
+int			set_texture(t_game *game);
 
-//parser
+// parser
 
-//inti_game
-void init_game(t_game *game);
+// parse.c
+int			parse_file(t_game *game, char *filename);
+void		parse_texture(t_game *game, const char *path, char **texture_path);
+void		parse_color(t_game *game, const char *color_str, int *color);
+
+// main.c
+void		error_exit(char *message, t_game *game);
+
+// inti_game
+void		init_game(t_game *game);
+
+char		*get_next_line(int fd);
+// int			ft_putc(t_string *str, char c);
+// char		ft_getc(int fd);
+// int			extend_capacity(t_string *str);
+
+// ft_split.c
+char		**ft_split(char const *s, char c);
 
 #endif

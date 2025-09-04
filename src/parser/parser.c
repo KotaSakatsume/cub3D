@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:02:17 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/31 19:59:44 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:51:11 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,35 @@
 #include <unistd.h>
 
 // ================= Utility =================
+
+// normalize_map は先ほどの完成版を使用
+
+// マップをターミナルに表示する関数
+void	print_map(t_map *map)
+{
+	int	y;
+	int	x;
+
+	if (!map || !map->map)
+		return ;
+	printf("Map (width: %d, height: %d):\n", map->width, map->height);
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			// 行が短い場合は空白で埋めて出力
+			if (x < (int)strlen(map->map[y]))
+				putchar(map->map[y][x]);
+			else
+				putchar(' ');
+			x++;
+		}
+		putchar('\n');
+		y++;
+	}
+}
 
 static char	*process_line(char *line)
 {
@@ -79,40 +108,96 @@ void	add_map_line(t_map *map, const char *line)
 	map->height++;
 }
 
-void	normalize_map(t_map *map)
+static int	count_players(t_map *map)
 {
-	int		i;
-	int		max_len;
-	int		len;
-	char	*new_line;
-	int		j;
+	int	count;
 
-	max_len = 0;
-	for (i = 0; i < map->height; i++)
+	int x, y;
+	count = 0;
+	y = 0;
+	while (y < map->height)
 	{
-		len = strlen(map->map[i]);
-		if (len > max_len)
-			max_len = len;
-	}
-	for (i = 0; i < map->height; i++)
-	{
-		len = strlen(map->map[i]);
-		if (len < max_len)
+		x = 0;
+		while (x < map->width)
 		{
-			new_line = malloc(max_len + 1);
-			if (!new_line)
-				error_exit("Malloc failed in normalize_map", NULL);
-			for (j = 0; j < len; j++)
-				new_line[j] = map->map[i][j];
-			for (; j < max_len; j++)
-				new_line[j] = ' ';
-			new_line[max_len] = '\0';
-			free(map->map[i]);
-			map->map[i] = new_line;
+			if (map->map[y][x] == 'N' || map->map[y][x] == 'S'
+				|| map->map[y][x] == 'E' || map->map[y][x] == 'W')
+				count++;
+			x++;
 		}
+		y++;
 	}
-	map->width = max_len;
+	return (count);
 }
+
+static void	check_cell(t_map *map, int y, int x, t_game *game)
+{
+	if (map->map[y][x] == '0' || map->map[y][x] == 'N' || map->map[y][x] == 'S'
+		|| map->map[y][x] == 'E' || map->map[y][x] == 'W')
+	{
+		// 隣接セルが空白ならエラー
+		if (y == 0 || y == map->height - 1 || x == 0 || x == map->width - 1
+			|| map->map[y - 1][x] == ' ' || map->map[y + 1][x] == ' '
+			|| map->map[y][x - 1] == ' ' || map->map[y][x + 1] == ' ')
+			error_exit("Map is not enclosed properly", game);
+	}
+}
+
+void	validate_map(t_game *game)
+{
+	t_map	*map;
+
+	map = &game->map_data;
+	int y, x;
+	if (count_players(map) != 1)
+		error_exit("Map must have exactly one player", game);
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			check_cell(map, y, x, game);
+			x++;
+		}
+		y++;
+	}
+}
+
+// void	normalize_map(t_map *map)
+// {
+// 	int		i;
+// 	int		max_len;
+// 	int		len;
+// 	char	*new_line;
+// 	int		j;
+
+// 	max_len = 0;
+// 	for (i = 0; i < map->height; i++)
+// 	{
+// 		len = strlen(map->map[i]);
+// 		if (len > max_len)
+// 			max_len = len;
+// 	}
+// 	for (i = 0; i < map->height; i++)
+// 	{
+// 		len = strlen(map->map[i]);
+// 		if (len < max_len)
+// 		{
+// 			new_line = malloc(max_len + 1);
+// 			if (!new_line)
+// 				error_exit("Malloc failed in normalize_map", NULL);
+// 			for (j = 0; j < len; j++)
+// 				new_line[j] = map->map[i][j];
+// 			for (; j < max_len; j++)
+// 				new_line[j] = ' ';
+// 			new_line[max_len] = '\0';
+// 			free(map->map[i]);
+// 			map->map[i] = new_line;
+// 		}
+// 	}
+// 	map->width = max_len;
+// }
 
 // ================= File Reading =================
 
@@ -244,37 +329,129 @@ void	parse_config_line(t_game *game, const char *line)
 		error_exit("Unknown identifier in config file", game);
 }
 
+// マップの行幅を揃えて正方形っぽくする関数
+void	normalize_map(t_map *map)
+{
+	int		i;
+	int		max_len;
+	int		j;
+	int		len;
+	char	*new_line;
+
+	// 1. 最大幅を求める
+	max_len = 0;
+	i = 0;
+	while (map->map[i] != NULL)
+	{
+		len = strlen(map->map[i]);
+		if (len > max_len)
+			max_len = len;
+		i++;
+	}
+	map->width = max_len;
+	// 2. 各行の幅を揃える（足りない部分は空白で埋める）
+	i = 0;
+	while (map->map[i] != NULL)
+	{
+		len = strlen(map->map[i]);
+		if (len < max_len)
+		{
+			new_line = malloc(sizeof(char) * (max_len + 1));
+			if (!new_line)
+				error_exit("Malloc failed in normalize_map", NULL);
+			j = 0;
+			while (j < len)
+			{
+				new_line[j] = map->map[i][j];
+				j++;
+			}
+			while (j < max_len)
+			{
+				new_line[j] = ' ';
+				j++;
+			}
+			new_line[j] = '\0';
+			free(map->map[i]);
+			map->map[i] = new_line;
+		}
+		i++;
+	}
+	map->height = i;
+}
+
+void	set_player_start(t_game *game)
+{
+	int		y;
+	int		x;
+	int		found;
+	char	c;
+
+	found = 0;
+	y = 0;
+	while (y < game->map_data.height)
+	{
+		x = 0;
+		while (x < game->map_data.width)
+		{
+			c = game->map_data.map[y][x];
+			if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+			{
+				if (found)
+					error_exit("Multiple player positions found", game);
+				game->map_data.player_x = x;
+				game->map_data.player_y = y;
+				game->map_data.player_dir = c;
+				game->map_data.map[y][x] = '0';
+				found = 1;
+			}
+			x++;
+		}
+		y++;
+	}
+	if (!found)
+		error_exit("No player position found", game);
+	printf("Player start: x=%d, y=%d, dir=%c\n", game->map_data.player_x,
+		game->map_data.player_y, game->map_data.player_dir);
+}
+
 // ================= Main Parse =================
 
 int	parse_file(t_game *game, char *filename)
 {
 	char	**file_content;
 	int		i;
-	int		y;
 
-	i = 0;
+	// 1. ファイルを読み込み
 	file_content = read_file(game, filename);
 	if (!file_content)
 		return (0);
+	// 2. 各行をパース
+	i = 0;
 	while (file_content[i] != NULL)
 	{
-		parse_config_line(game, file_content[i]);
+		if (is_map_line(file_content[i]))
+			add_map_line(&game->map_data, file_content[i]);
+		else
+			parse_config_line(game, file_content[i]);
 		i++;
 	}
+	// 3. マップの正規化（行幅を揃える）
 	normalize_map(&game->map_data);
+	// 4. マップのバリデーション（壁で囲まれているか、プレイヤーが1人か）
+	validate_map(game);
+	set_player_start(game);
+	// 5. 確認用出力（任意）
 	printf("NO : %s\n", game->north_texture);
 	printf("SO : %s\n", game->south_texture);
 	printf("WE : %s\n", game->west_texture);
 	printf("EA : %s\n", game->east_texture);
 	printf("F  : %d\n", game->floor_color);
 	printf("C  : %d\n", game->ceiling_color);
-	y = 0;
-	while (y < game->map_data.height)
-	{
-		printf("%s\n", game->map_data.map[y]);
-		y++;
-	}
-	// メモリ解放
+	print_map(&game->map_data);
+	printf("=====Player position set=====\n");
+	printf("X: %d\n", game->map_data.player_x);
+	printf("Y: %d\n", game->map_data.player_y);
+	printf("Direction: %c\n", game->map_data.player_dir);
 	i = 0;
 	while (file_content[i] != NULL)
 	{
@@ -282,5 +459,6 @@ int	parse_file(t_game *game, char *filename)
 		i++;
 	}
 	free(file_content);
+	// 成功
 	return (1);
 }
