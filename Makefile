@@ -6,7 +6,7 @@
 #    By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/31 17:55:57 by kosakats         ###   ########.fr        #
+#    Updated: 2025/09/08 18:59:30 by kosakats         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,19 @@ SRCS_MAIN     = $(addprefix $(SRC_DIR)/, $(SRC_MAIN))
 OBJS_MAIN     = $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Parser
-SRC_PARSER    = parser.c \
+SRC_PARSER    = parse.c \
                 init_game.c \
                 get_next_line/get_next_line.c \
                 get_next_line/get_next_line_utils.c \
-				ft_split.c
+				ft_split.c \
+				val_map.c \
+				parse_co_and_tex.c \
+				read_file.c \
+				set_player.c \
+				normalize_map.c \
+				find_player.c \
+				bfs.c \
+				parse_utils.c
 
 SRCS_PARSER   = $(addprefix $(SRC_DIR)/parser/, $(SRC_PARSER))
 OBJS_PARSER   = $(SRCS_PARSER:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
