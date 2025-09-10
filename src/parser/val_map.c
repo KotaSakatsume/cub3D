@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/08 19:01:05 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:14:54 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,18 @@ static int	**init_visited(int width, int height)
 	return (visited);
 }
 
-// マップ全体を探索してプレイヤーを探す
 void	find_player_loop(t_game *game, t_queue **queue)
 {
 	char	**map;
 	int		width;
 	int		height;
 	int		y;
+	int		x_found[2];
 
 	map = game->map_data.map;
 	width = game->map_data.width;
 	height = game->map_data.height;
 	y = 0;
-	int x_found[2]; // [0] = x, [1] = found
 	x_found[1] = 0;
 	while (y < height && !x_found[1])
 	{

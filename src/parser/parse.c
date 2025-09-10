@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:02:17 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/08 18:18:11 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:37:01 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 #include <string.h>
 #include <unistd.h>
 
-// ================= Utility =================
-
-// normalize_map は先ほどの完成版を使用
-
-// マップをターミナルに表示する関数
 void	print_map(t_map *map)
 {
 	int	y;
@@ -54,8 +49,6 @@ static const char	*skip_spaces(const char *s)
 	return (s);
 }
 
-// ================= Map Helper =================
-
 int	is_map_line(char *line)
 {
 	int	i;
@@ -79,9 +72,11 @@ void	add_map_line(t_map *map, const char *line)
 	char	**new_map;
 	int		i;
 
+	// 新しい配列を確保
 	new_map = malloc(sizeof(char *) * (map->height + 2));
 	if (!new_map)
 		error_exit("Malloc failed for map", NULL);
+	// 既存のポインタをコピー（文字列自体はコピーしない）
 	i = 0;
 	while (i < map->height)
 	{
@@ -120,25 +115,36 @@ void	parse_config_line(t_game *game, const char *line)
 		error_exit("Unknown identifier in config file", game);
 }
 
-// ================= Main Parse =================
+// void	free_file_content(char **file_content)
+// {
+// 	int	i;
+
+// 	if (!file_content)
+// 		return ;
+// 	i = 0;
+// 	while (file_content[i])
+// 	{
+// 		free(file_content[i]);
+// 		i++;
+// 	}
+// 	free(file_content);
+// }
 
 int	parse_file(t_game *game, char *filename)
 {
-	char	**file_content;
 	int		i;
 	int		map_started;
 	char	*line;
 
-	// 1. ファイルを読み込み
-	file_content = read_file(game, filename);
-	if (!file_content)
+	// char	**file_content;
+	game->file_content = read_file(game, filename);
+	if (!game->file_content)
 		return (0);
-	// 2. 各行をパース
 	i = 0;
 	map_started = 0;
-	while (file_content[i] != NULL)
+	while (game->file_content[i] != NULL)
 	{
-		line = file_content[i];
+		line = game->file_content[i];
 		if (is_map_line(line))
 		{
 			map_started = 1;
@@ -146,40 +152,46 @@ int	parse_file(t_game *game, char *filename)
 		}
 		else if (map_started)
 		{
-			// マップ開始後にマップ判定に引っかからない行は無効
+			// free_file_content(game->file_content);
 			error_exit("Invalid line after map started", game);
 		}
 		else
-		{
-			// マップ開始前は設定行のみ
 			parse_config_line(game, line);
-		}
 		i++;
 	}
-	// 3. マップの正規化（行幅を揃える）
+	if (game->map_data.height == 0 || !game->map_data.map)
+		error_exit("Map is empty", game);
 	normalize_map(&game->map_data);
-	// 4. マップのバリデーション（壁で囲まれているか、プレイヤーが1人か）
 	validate_map(game);
 	set_player_start(game);
-	// 5. 確認用出力（任意）
-	printf("NO : %s\n", game->north_texture);
-	printf("SO : %s\n", game->south_texture);
-	printf("WE : %s\n", game->west_texture);
-	printf("EA : %s\n", game->east_texture);
-	printf("F  : %d\n", game->floor_color);
-	printf("C  : %d\n", game->ceiling_color);
-	print_map(&game->map_data);
-	printf("=====Player position set=====\n");
-	printf("X: %d\n", game->map_data.player_x);
-	printf("Y: %d\n", game->map_data.player_y);
-	printf("Direction: %c\n", game->map_data.player_dir);
-	i = 0;
-	while (file_content[i] != NULL)
+	// printf("NO : %s\n", game->north_texture);
+	// printf("SO : %s\n", game->south_texture);
+	// printf("WE : %s\n", game->west_texture);
+	// printf("EA : %s\n", game->east_texture);
+	// printf("F  : %d\n", game->floor_color);
+	// printf("C  : %d\n", game->ceiling_color);
+	// print_map(&game->map_data);
+	// printf("=====Player position set=====\n");
+	// printf("X: %d\n", game->map_data.player_x);
+	// printf("Y: %d\n", game->map_data.player_y);
+	// printf("Direction: %c\n", game->map_data.player_dir);
+	if (game->floor_color == -1 || game->ceiling_color == -1)
 	{
-		free(file_content[i]);
-		i++;
+		// free_file_content(game->file_content);
+		error_exit("Floor or ceiling color not set", game);
 	}
-	free(file_content);
-	// 成功
+	free_file_content(game->file_content);
 	return (1);
 }
+
+/*	// printf("NO : %s\n", game->north_texture);
+	// printf("SO : %s\n", game->south_texture);
+	// printf("WE : %s\n", game->west_texture);
+	// printf("EA : %s\n", game->east_texture);
+	// printf("F  : %d\n", game->floor_color);
+	// printf("C  : %d\n", game->ceiling_color);
+	// print_map(&game->map_data);
+	// printf("=====Player position set=====\n");
+	// printf("X: %d\n", game->map_data.player_x);
+	// printf("Y: %d\n", game->map_data.player_y);
+	// printf("Direction: %c\n", game->map_data.player_dir);*/

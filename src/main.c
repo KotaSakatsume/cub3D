@@ -6,18 +6,73 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/27 12:59:43 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:33:29 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+void	free_file_content(char **file_content)
+{
+	int	i;
+
+	if (!file_content)
+		return ;
+	i = 0;
+	while (file_content[i])
+	{
+		free(file_content[i]);
+		i++;
+	}
+	free(file_content);
+}
+
+void	free_map(t_map *map)
+{
+	int	i;
+
+	if (!map || !map->map)
+		return ;
+	i = 0;
+	while (map->map[i])
+	{
+		free(map->map[i]);
+		i++;
+	}
+	free(map->map);
+	map->map = NULL;
+}
+
+// textures の解放
+void	free_textures(t_game *game)
+{
+	if (!game)
+		return ;
+	free(game->north_texture);
+	free(game->south_texture);
+	free(game->west_texture);
+	free(game->east_texture);
+	game->north_texture = NULL;
+	game->south_texture = NULL;
+	game->west_texture = NULL;
+	game->east_texture = NULL;
+}
+
+// F/C 色は int などの場合解放不要だが、別途 malloc していた場合は free を追加
+
+// 完全版 error_exit
 void	error_exit(char *message, t_game *game)
 {
 	write(2, "Error\n", 6);
 	if (message)
 		write(2, message, strlen(message));
-	free(game);
+	if (game)
+	{
+		free_file_content(game->file_content);
+		free_map(&game->map_data);
+		free_textures(game);
+		free(game);
+	}
 	exit(1);
 }
 
@@ -33,25 +88,59 @@ int	check_extension(const char *filename, const char *extension)
 	return (1);
 }
 
+#include <stdio.h>
+
+void	printf_map(t_map *map)
+{
+	int	y;
+
+	y = 0;
+	printf("Map (width=%d, height=%d):\n", map->width, map->height);
+	while (y < map->height)
+	{
+		printf("%s\n", map->map[y]);
+		y++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	*game;
 
 	game = (t_game *)malloc(sizeof(t_game));
+	if (!game)
+		return (fprintf(stderr, "Memory allocation failed\n"), 1);
 	if (argc != 2)
 		return (error_exit("Usage: ./cub3d <map.cub>\n", game), 1);
 	if (!check_extension(argv[1], ".cub"))
 		return (error_exit("File must have .cub extension\n", game), 1);
-	// 2.構造体初期化
-	if (!game)
-		error_exit("Memory allocation failed\n", game);
 	init_game(game);
-	// 3. パース処理の開始
 	if (!parse_file(game, argv[1]))
 		return (1); // parse_file内でエラーメッセージは出力済み
-					// 4. ゲームの初期化と実行
-					// init_game(&game);
-					// run_game(&game);
+	// ------------------------------
+	// デバッグ表示
+	// ------------------------------
+	printf("=== NEWS (Textures) ===\n");
+	printf("North: %s\n", game->north_texture);
+	printf("South: %s\n", game->south_texture);
+	printf("East:  %s\n", game->east_texture);
+	printf("West:  %s\n", game->west_texture);
+	printf("\n=== FC (Floor / Ceiling) ===\n");
+	printf("Floor:   %d\n", game->floor_color);
+	printf("Ceiling: %d\n", game->ceiling_color);
+	printf("\n=== MAP ===\n");
+	printf_map(&game->map_data);
+	// ------------------------------
+	// メモリ解放
+	// ------------------------------
+	free(game->north_texture);
+	free(game->south_texture);
+	free(game->east_texture);
+	free(game->west_texture);
+	// map_data 内の各行も free する
+	for (int i = 0; i < game->map_data.height; i++)
+		free(game->map_data.map[i]);
+	free(game->map_data.map);
 	free(game);
 	return (0);
 }

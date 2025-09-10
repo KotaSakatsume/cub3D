@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/08 18:58:40 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/10 14:26:38 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ typedef struct s_game
 	t_img *east_img;  // mkuida
 	t_img *west_img;  // mkuida
 
+	// kosakats追加
+	char			**file_content;
+
 }					t_game;
 
 typedef struct s_queue
@@ -116,6 +119,7 @@ void				parse_color(t_game *game, const char *color_str,
 
 // main.c
 void				error_exit(char *message, t_game *game);
+void				free_file_content(char **file_content);
 
 // inti_game
 void				init_game(t_game *game);
