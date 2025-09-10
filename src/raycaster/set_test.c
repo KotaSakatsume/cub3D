@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 01:00:44 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 16:58:09 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 19:23:44 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,7 @@ int	set_test(t_game *game)
 	//視覚幅
 	game->player_plane_x = 0;
 	game->player_plane_y = 0;
+	//
+	game->screen.mlx_img = NULL;
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/08/28 15:13:18 by mkuida           ###   ########.fr        #
+#    Updated: 2025/09/10 18:07:08 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC_RAYCASTER =	dda.c\
 				my_mlx.c\
 				ray_util.c\
 				set_mlx_hook.c\
+				set_start_vision.c\
 				set_test.c\
 				set_texture.c\
 				set_xml_imgs_wall_data.c

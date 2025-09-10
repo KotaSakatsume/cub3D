@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/10 17:32:56 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 19:18:18 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ typedef struct s_game
     t_img        south_img;    //mkuida
     t_img        east_img;    //mkuida
     t_img        west_img;    //mkuida
+	t_img		screen;		//tuika
 	
 }   t_game;
 
@@ -157,7 +158,6 @@ void	free_game(t_game *game);
 
 //raycaster_line_asset.c
 void	set_line_by_dda(t_game *game, t_linedraw *line);
-void	print_line(t_linedraw *line, int X);
 
 //raycaster_my_mlx.c
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
@@ -168,6 +168,7 @@ int		max(int x, int y);
 int		min(int x, int y);
 void	free_game(t_game *game);
 void	destroy_all_image(t_game *game);
+void	print_line(t_linedraw *line, int X);
 
 //raycaster_set_mlx_hook.c
 void	set_mlx_hook(t_game *game);
@@ -177,6 +178,8 @@ int		set_test(t_game *game);
 
 //raycaster_set_textur.c
 int		set_texture(t_game *game);
+
+//raycaster_set_start_vision.c
 void	set_start_vision(t_game *game);
 
 //raycaster_set_xml_imgs_wall_data.c

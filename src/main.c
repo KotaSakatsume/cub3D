@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/10 17:45:42 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 17:48:36 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int main()
 		//free_game(&game);
 		return (1);
 	}
-
 
 	//hookの設定
 	set_mlx_hook(&game);

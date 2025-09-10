@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 10:41:14 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/27 10:41:14 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 17:51:14 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	set_hitpoint(t_game *game, t_linedraw *line)
 			(line->hit_point) -= 1.0;
 	}
 	(line->hit_point) = (line->hit_point) - floor((line->hit_point));
-	// printf("hit_point = %f\n",line->hit_point);
 }
 
 static void	set_draw_wall_info(t_linedraw *line)
@@ -92,18 +91,3 @@ void	set_line_by_dda(t_game *game, t_linedraw *line)
 	return ;
 }
 
-void	print_line(t_linedraw *line, int X)
-{
-	printf("print line start: X = %d\n", X);
-	//初期条件
-	printf("rayX = %f : rayY = %f : camera = %f\n", line->rayX, line->rayY,
-		line->cameraX);
-	//結果
-	printf("draw_wall_start = %d : draw_wall_end = %d : wall_height = %d\n",
-		line->draw_wall_start, line->draw_wall_end, line->wall_height);
-	printf("wall_side = %c\n", line->wall_side);
-	printf("hit_x = %d : hit_y = %d\n", line->hit_X, line->hit_Y);
-	printf("distinct = %f\n", line->distinct);
-	printf("hit_point = %f\n", line->hit_point);
-	printf("print line end: X = %d\n", X);
-}
