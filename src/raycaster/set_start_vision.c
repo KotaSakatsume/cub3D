@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 18:00:46 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 19:43:20 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 19:49:38 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,10 @@ static void	print_wall_color(t_game *game, t_linedraw *line, t_img *img, int X)
 		printf("originaldata error\n");
 		exit(1);
 	}
-	// int test = original_data->width;
-	// int original_x = (line->hit_point)*(original_data->width);
-	//printf("hit_point = %f : original_width = %d : original_x =%d\n",
-	//	line->hit_point, original_data->width, original_x);
 	for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
 	{
 		y_raito = ((double)(y - (line->draw_wall_start)) / (line->wall_height));
-		// printf("y_raito = %f\n",y_raito);
 		original_y = (original_data->height) * (y_raito);
-		// printf("original_x = %d : original_y = %d\n",original_x,original_y);
 		wall_color = my_mlx_pixel_get(original_data, original_x, original_y);
 		my_mlx_pixel_put(img, X, y, wall_color);
 	}
@@ -62,18 +56,22 @@ static void	print_wall_color(t_game *game, t_linedraw *line, t_img *img, int X)
 
 static void	print_tex(t_game *game, t_linedraw *line, t_img *img, int X)
 {
-	// ceil
-	for (int y = 0; y < line->draw_wall_start; y++)
-		my_mlx_pixel_put(img, X, y, game->ceiling_color);
-	// wall
+	int i;
+	int j;
+
+	i = 0;
+	j = (line->draw_wall_end + 1);
+	while(i < (line->draw_wall_start))
+	{
+		my_mlx_pixel_put(img, X, i, game->ceiling_color);
+		i++;
+	}
 	print_wall_color(game, line, img, X);
-	// for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
-	// {
-	// 	my_mlx_pixel_put(img, X, y, 0x00FFFF00);
-	// }
-	// floor (fixed test color)
-	for (int y = (line->draw_wall_end + 1); y < WINDOW_HEIGHT; y++)
-		my_mlx_pixel_put(img, X, y, game->floor_color);
+	while(j < WINDOW_HEIGHT)
+	{
+		my_mlx_pixel_put(img, X, j, game->floor_color);
+		j++;
+	}
 }
 
 void	set_start_vision(t_game *game)
@@ -93,11 +91,8 @@ void	set_start_vision(t_game *game)
 	{
 		init_line(&line, X, game);
 		set_line_by_dda(game, &line);
-		// ceiling (fixed test color)
 		print_tex(game, &line, &(game->screen), X);
-		// debag
 		X++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->screen.mlx_img, 0, 0);
-	// mlx_destroy_image(game->mlx,img.mlx_img);
 }
