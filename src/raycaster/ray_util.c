@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:26:49 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 16:54:18 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 17:41:33 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,30 @@ int	min(int x, int y)
 		return (y);
 	else
 		return (x);
+}
+
+void	free_game(t_game *game)
+{
+	int i;
+
+	i = 0;
+	free(game->north_texture);
+	free(game->south_texture);
+	free(game->east_texture);
+	free(game->west_texture);
+	while(i < (game->map_data.height))
+	{
+		free(game->map_data.map[i]);
+		i++;
+	}
+	free(game->map_data.map);
+	free(game);
+}
+
+void	destroy_all_image(t_game *game)
+{
+	mlx_destroy_image(game->mlx, game->north_img.mlx_img);
+	mlx_destroy_image(game->mlx, game->east_img.mlx_img);
+	mlx_destroy_image(game->mlx, game->west_img.mlx_img);
+	mlx_destroy_image(game->mlx, game->south_img.mlx_img);
 }

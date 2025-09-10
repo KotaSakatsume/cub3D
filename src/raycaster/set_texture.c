@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 17:00:09 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 17:22:33 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 static int	start_mlx(t_game *game)
 {
-	//上限と下弦の値はこれでいい？
-	if (WINDOW_WIDTH < 1 || WINDOW_HEIGHT < 1)
+	if (WINDOW_WIDTH < WINDOW_MIN_WIDTH || WINDOW_HEIGHT < WINDOW_MIN_HEIGHT)
 	{
-		perror("mlx_init : check your WINDOW_SIZE");
-		// exitなので修正必要
-		exit(EXIT_FAILURE);
+		perror("start_mlx : check your WINDOW_SIZE");
+		return (1);
 	}
-	// init_mlx
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
 	{
-		perror("mlx_init");
-		// exitなので修正必要
-		exit(EXIT_FAILURE);
+		perror("start_mlx : mlx_init");
+		return(1);
 	}
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	if (game->win == NULL)
 	{
-		perror("mlx_new_window");
-		exit(EXIT_FAILURE);
+		perror("start_mlx : mlx_new_window");
+		return (1);
 	}
 	return (0);
 }
@@ -45,18 +41,14 @@ static void	set_pp(t_game *game)
 
 	FOV = 90.0;
 	player_plane_length = tan(M_PI * (FOV / 2) / 180);
-	//直行
-	//１を右、ー１を左にセットする
 	game->player_plane_x = -(game->player_dir_y) * player_plane_length;
 	game->player_plane_y = (game->player_dir_x) * player_plane_length;
 }
 
 static void	set_start_player_posi(t_game *game)
 {
-	// xy set
 	game->player_pos_x = (game->map_data.player_x) + 0.5;
 	game->player_pos_y = (game->map_data.player_y) + 0.5;
-	// posi set
 	if (game->map_data.player_dir == 'N')
 		game->player_dir_y = -1;
 	else if (game->map_data.player_dir == 'E')
@@ -67,7 +59,7 @@ static void	set_start_player_posi(t_game *game)
 		game->player_dir_y = 1;
 	else
 	{
-		printf("error : set_player\n");
+		ft_printf("error : set_player\n");
 		exit(1);
 	}
 	set_pp(game);
@@ -169,14 +161,17 @@ void	set_start_vision(t_game *game)
 
 int	set_texture(t_game *game)
 {
-	start_mlx(game);
-	printf("end : set_texture : start_mlx\n");
-	set_xml_imgs_wall_data(game);
-	printf("end : set_texture : set_imgs_data\n");
+	if(start_mlx(game) == 1)
+		return (1);
+	if(set_xml_imgs_wall_data(game) == 1)
+	{
+		mlx_destroy_window(game->mlx,game->win);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		return (1);
+	}
 	set_start_player_posi(game);
-	printf("end : set_texture : set_player\n");
 	// in loop yobidasiteru
 	set_start_vision(game);
-	printf("end : set_texture : set_start_vision\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/08/28 15:12:34 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 17:32:56 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
+#define WINDOW_MIN_WIDTH 100
+#define WINDOW_MIN_HEIGHT 100
 #define ROTATE_SPEED_DEGREE 1
 #define MOVE_SPEED 1
 #define EXIT_FAILURE 1
@@ -151,6 +153,7 @@ int		rotate_player_right(t_game *game);
 
 //raycaster_init_line.c
 void	init_line(t_linedraw *line, int X, t_game *game);
+void	free_game(t_game *game);
 
 //raycaster_line_asset.c
 void	set_line_by_dda(t_game *game, t_linedraw *line);
@@ -163,6 +166,8 @@ int		my_mlx_pixel_get(t_img *data, int x, int y);
 //raycaster_ray_util.c
 int		max(int x, int y);
 int		min(int x, int y);
+void	free_game(t_game *game);
+void	destroy_all_image(t_game *game);
 
 //raycaster_set_mlx_hook.c
 void	set_mlx_hook(t_game *game);

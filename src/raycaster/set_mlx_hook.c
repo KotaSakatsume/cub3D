@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:15:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 16:55:39 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 17:44:36 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 static int	handle_close(t_game *game)
 {
-	(void)game;
-	// destroy_image_before_close(data);
-	// mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// mlx_destroy_display(data->mlx_ptr);
-	// data->win_ptr = NULL;
-	// free(data->mlx_ptr);
-	// free_map(data->map);
-	// free(data);
-	// exit(0);
+	destroy_all_image(game);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	game->win = NULL;
+	free(game->mlx);
+	// free_game(game);
 	exit(0);
 }
 
