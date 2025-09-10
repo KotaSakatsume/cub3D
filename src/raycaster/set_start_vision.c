@@ -6,11 +6,40 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 18:00:46 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 19:49:38 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/10 19:59:32 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+static void set_wallseide(t_linedraw *line, t_img **original_data, int *original_x ,t_game *game)
+{
+	if (line->wall_side == 'w')
+	{
+		*original_data = &game->west_img;
+		*original_x = (1.0 - (line->hit_point)) * ((*original_data)->width);
+	}
+	else if (line->wall_side == 'n')
+	{
+		*original_data = &game->north_img;
+		*original_x = (line->hit_point) * ((*original_data)->width);
+	}
+	else if (line->wall_side == 'e')
+	{
+		*original_data = &game->east_img;
+		*original_x = (line->hit_point) * ((*original_data)->width);
+	}
+	else if (line->wall_side == 's')
+	{
+		*original_data = &game->south_img;
+		*original_x = (1.0 - (line->hit_point)) * ((*original_data)->width);
+	}
+	else
+	{
+		ft_printf("originaldata error\n");
+		exit(1);
+	}
+}
 
 static void	print_wall_color(t_game *game, t_linedraw *line, t_img *img, int X)
 {
@@ -20,31 +49,8 @@ static void	print_wall_color(t_game *game, t_linedraw *line, t_img *img, int X)
 	double	y_raito;
 	int		original_y;
 
-	if (line->wall_side == 'w')
-	{
-		original_data = &game->west_img;
-		original_x = (1.0 - (line->hit_point)) * (original_data->width);
-	}
-	else if (line->wall_side == 'n')
-	{
-		original_data = &game->north_img;
-		original_x = (line->hit_point) * (original_data->width);
-	}
-	else if (line->wall_side == 'e')
-	{
-		original_data = &game->east_img;
-		original_x = (line->hit_point) * (original_data->width);
-	}
-	else if (line->wall_side == 's')
-	{
-		original_data = &game->south_img;
-		original_x = (1.0 - (line->hit_point)) * (original_data->width);
-	}
-	else
-	{
-		printf("originaldata error\n");
-		exit(1);
-	}
+	set_wallseide(line, &original_data, &original_x, game);
+
 	for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
 	{
 		y_raito = ((double)(y - (line->draw_wall_start)) / (line->wall_height));
