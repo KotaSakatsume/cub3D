@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 18:00:46 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 19:59:32 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 15:56:47 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,19 @@ static void	print_wall_color(t_game *game, t_linedraw *line, t_img *img, int X)
 	int		wall_color;
 	double	y_raito;
 	int		original_y;
+	int		i;
 
 	set_wallseide(line, &original_data, &original_x, game);
-
-	for (int y = (line->draw_wall_start); y <= (line->draw_wall_end); y++)
+	i = (line->draw_wall_start);
+	while(i < (line->draw_wall_end))
 	{
-		y_raito = ((double)(y - (line->draw_wall_start)) / (line->wall_height));
+		y_raito = ((double)(i - (line->draw_wall_start)) / (line->wall_height));
 		original_y = (original_data->height) * (y_raito);
 		wall_color = my_mlx_pixel_get(original_data, original_x, original_y);
-		my_mlx_pixel_put(img, X, y, wall_color);
+		my_mlx_pixel_put(img, X, i, wall_color);
+		i++;
 	}
+
 }
 
 static void	print_tex(t_game *game, t_linedraw *line, t_img *img, int X)
