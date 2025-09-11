@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:26:49 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 19:26:32 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 15:59:47 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int	min(int x, int y)
 
 void	free_game(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	free(game->north_texture);
 	free(game->south_texture);
 	free(game->east_texture);
 	free(game->west_texture);
-	while(i < (game->map_data.height))
+	while (i < (game->map_data.height))
 	{
 		free(game->map_data.map[i]);
 		i++;

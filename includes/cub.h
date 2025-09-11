@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/10 19:18:18 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 16:22:38 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "mlx.h"
 
 
+#define FOV (double)90.0
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define WINDOW_MIN_WIDTH 100
@@ -183,6 +184,6 @@ int		set_texture(t_game *game);
 void	set_start_vision(t_game *game);
 
 //raycaster_set_xml_imgs_wall_data.c
-int		set_xml_imgs_wall_data(t_game *game);
+int		set_mlx_imgs_wall_data(t_game *game);
 
 #endif

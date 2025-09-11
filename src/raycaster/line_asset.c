@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 10:41:14 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 17:51:14 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 15:59:25 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	set_line_by_dda(t_game *game, t_linedraw *line)
 	set_line_param(game, line);
 	return ;
 }
-

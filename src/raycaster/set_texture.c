@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 18:04:25 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 16:23:20 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	start_mlx(t_game *game)
 	if (game->mlx == NULL)
 	{
 		perror("start_mlx : mlx_init");
-		return(1);
+		return (1);
 	}
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	if (game->win == NULL)
@@ -36,10 +36,8 @@ static int	start_mlx(t_game *game)
 
 static void	set_pp(t_game *game)
 {
-	double	FOV;
 	double	player_plane_length;
 
-	FOV = 90.0;
 	player_plane_length = tan(M_PI * (FOV / 2) / 180);
 	game->player_plane_x = -(game->player_dir_y) * player_plane_length;
 	game->player_plane_y = (game->player_dir_x) * player_plane_length;
@@ -67,17 +65,16 @@ static void	set_start_player_posi(t_game *game)
 
 int	set_texture(t_game *game)
 {
-	if(start_mlx(game) == 1)
+	if (start_mlx(game) == 1)
 		return (1);
-	if(set_xml_imgs_wall_data(game) == 1)
+	if (set_mlx_imgs_wall_data(game) == 1)
 	{
-		mlx_destroy_window(game->mlx,game->win);
+		mlx_destroy_window(game->mlx, game->win);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		return (1);
 	}
 	set_start_player_posi(game);
-	// in loop yobidasiteru
 	set_start_vision(game);
 	return (0);
 }

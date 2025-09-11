@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/09/10 18:07:08 by mkuida           ###   ########.fr        #
+#    Updated: 2025/09/11 16:22:51 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ SRC_RAYCASTER =	dda.c\
 				set_start_vision.c\
 				set_test.c\
 				set_texture.c\
-				set_xml_imgs_wall_data.c
+				set_mlx_imgs_wall_data.c
 
 SRC_RAYCASTER_DIR = $(SRC_DIR)/raycaster
 OBJ_RAYCASTER_DIR = $(OBJ_DIR)/raycaster

@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:39:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/02 19:09:41 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 16:20:00 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	out_map(t_game *game, t_linedraw *line)
 	(void)*game;
 	printf("error : out  map\n");
 	printf("(line->tileX) = %d , (line->tileY) = %d\n", (line->tileX),
-		   (line->tileY));
+		(line->tileY));
 	exit(1);
 }
 
@@ -64,7 +64,7 @@ void	dda(t_linedraw *line, t_game *game)
 		if (check_out_map(&(game->map_data), line) == true)
 			out_map(game, line);
 		if (check_hit_wall(&(game->map_data), (line->tileX),
-						   (line->tileY)) == true)
+				(line->tileY)) == true)
 			hit = 1;
 	}
 }

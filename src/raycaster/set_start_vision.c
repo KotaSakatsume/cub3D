@@ -6,13 +6,14 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 18:00:46 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/11 15:58:24 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 16:19:21 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void set_wallseide(t_linedraw *line, t_img **original_data, int *original_x ,t_game *game)
+static void	set_wallseide(t_linedraw *line, t_img **original_data,
+		int *original_x, t_game *game)
 {
 	if (line->wall_side == 'w')
 	{
@@ -51,30 +52,30 @@ static void	print_wall_color(t_game *game, t_linedraw *line, t_img *img, int X)
 
 	set_wallseide(line, &original_data, &original_x, game);
 	i = (line->draw_wall_start);
-	while(i < (line->draw_wall_end))
+	while (i < (line->draw_wall_end))
 	{
-		original_y = (original_data->height) * ((double)(i - (line->draw_wall_start)) / (line->wall_height));
+		original_y = (original_data->height) * ((double)(i
+					- (line->draw_wall_start)) / (line->wall_height));
 		wall_color = my_mlx_pixel_get(original_data, original_x, original_y);
 		my_mlx_pixel_put(img, X, i, wall_color);
 		i++;
 	}
-
 }
 
 static void	print_tex(t_game *game, t_linedraw *line, t_img *img, int X)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = (line->draw_wall_end + 1);
-	while(i < (line->draw_wall_start))
+	while (i < (line->draw_wall_start))
 	{
 		my_mlx_pixel_put(img, X, i, game->ceiling_color);
 		i++;
 	}
 	print_wall_color(game, line, img, X);
-	while(j < WINDOW_HEIGHT)
+	while (j < WINDOW_HEIGHT)
 	{
 		my_mlx_pixel_put(img, X, j, game->floor_color);
 		j++;
@@ -83,23 +84,25 @@ static void	print_tex(t_game *game, t_linedraw *line, t_img *img, int X)
 
 void	set_start_vision(t_game *game)
 {
-	static bool first = true;
-	int			X;
+	static bool	first = true;
+	int			x;
 	t_linedraw	line;
 
-	X = 0;
-	if(game->screen.mlx_img == NULL)
+	x = 0;
+	if (game->screen.mlx_img == NULL)
 	{
-		game->screen.mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-		game->screen.addr = mlx_get_data_addr(game->screen.mlx_img, &game->screen.bpp, &game->screen.line_len,
+		game->screen.mlx_img = mlx_new_image(game->mlx, WINDOW_WIDTH,
+				WINDOW_HEIGHT);
+		game->screen.addr = mlx_get_data_addr(game->screen.mlx_img,
+				&game->screen.bpp, &game->screen.line_len,
 				&game->screen.endian);
 	}
-	while (X < WINDOW_WIDTH)
+	while (x < WINDOW_WIDTH)
 	{
-		init_line(&line, X, game);
+		init_line(&line, x, game);
 		set_line_by_dda(game, &line);
-		print_tex(game, &line, &(game->screen), X);
-		X++;
+		print_tex(game, &line, &(game->screen), x);
+		x++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->screen.mlx_img, 0, 0);
 }
