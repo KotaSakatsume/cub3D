@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:15:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/10 19:25:35 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 20:34:13 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	handle_close(t_game *game)
 	mlx_destroy_display(game->mlx);
 	game->win = NULL;
 	free(game->mlx);
-	// free_game(game);
+	free_game(game);
 	exit(0);
 }
 
