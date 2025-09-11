@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/11 20:15:45 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 20:41:24 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	main(int argc, char **argv)
 	if(set_texture(game) == 1)
 	{
 		perror("check_texture\n");
-		//free_game(&game);
+		free_game(game);
 		return (1);
 	}
 
