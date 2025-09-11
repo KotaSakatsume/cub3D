@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/09/11 16:22:51 by mkuida           ###   ########.fr        #
+#    Updated: 2025/09/11 20:19:43 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,20 @@ SRC_MAIN = main.c
 SRCS_MAIN = $(addprefix $(SRC_DIR)/, $(SRC_MAIN))
 OBJS_MAIN = $(SRCS_MAIN:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-SRC_PARSER = parser.c
+SRC_PARSER    = parse.c \
+                init_game.c \
+                get_next_line/get_next_line.c \
+                get_next_line/get_next_line_utils.c \
+				ft_split.c \
+				val_map.c \
+				parse_co_and_tex.c \
+				read_file.c \
+				set_player.c \
+				normalize_map.c \
+				find_player.c \
+				bfs.c \
+				parse_utils.c
+
 SRC_PARSER_DIR = $(SRC_DIR)/parser
 OBJ_PARSER_DIR = $(OBJ_DIR)/parser
 SRCS_PARSER = $(addprefix $(SRC_PARSER_DIR)/, $(SRC_PARSER))
@@ -84,7 +97,8 @@ $(NAME): $(MINILIBX) $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LDFLAGS)
 
 # make obj
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # make obj file

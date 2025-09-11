@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/11 16:22:38 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/11 20:09:24 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,74 @@ typedef struct s_game
     t_img        east_img;    //mkuida
     t_img        west_img;    //mkuida
 	t_img		screen;		//tuika
+
+	// kosakats追加
+	char			**file_content;
 	
 }   t_game;
+
+typedef struct s_queue
+{
+	int				x;
+	int				y;
+	struct s_queue	*next;
+}					t_queue;
+
+// main.c
+void				error_exit(char *message, t_game *game);
+void				free_file_content(char **file_content);
+
+// parser
+
+// parser_parse.c
+int					parse_file(t_game *game, char *filename);
+void				parse_texture(t_game *game, const char *path,
+						char **texture_path);
+void				parse_color(t_game *game, const char *color_str,
+						int *color);
+
+// parser_inti_game
+void				init_game(t_game *game);
+
+char				*get_next_line(int fd);
+// int			ft_putc(t_string *str, char c);
+// char		ft_getc(int fd);
+// int			extend_capacity(t_string *str);
+
+// parser_ft_split.c
+char				**ft_split(char const *s, char c);
+
+// parser_val_map.c
+void				validate_map(t_game *game);
+void				find_player_loop(t_game *game, t_queue **queue);
+
+// parser_parse_co_and_tex.c
+void				parse_color(t_game *game, const char *color_str,
+						int *color);
+void				parse_texture(t_game *game, const char *path,
+						char **texture_path);
+
+// parser_read_file.c
+char				**read_file(t_game *game, char *filename);
+
+// parser_set_player.c
+void				set_player_start(t_game *game);
+
+// parser_normalize_map.c
+void				normalize_map(t_map *map);
+
+// parser_find_player.c
+void				find_player(t_game *game, t_queue **queue);
+void				set_player_queue(t_queue **queue, int x, int y, int *found);
+void				enqueue(t_queue **head, int x, int y);
+
+// parser_bfs.c
+void				bfs_validate(t_game *game, int **visited, t_queue *queue);
+
+// parser_parse_utils.c
+void				free_visited(int **visited, int height);
+int					is_valid_char(char c);
+int					is_player(char c);
 
 
 //raycaster
