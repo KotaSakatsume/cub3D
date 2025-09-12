@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:02:17 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 11:08:25 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:48:07 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,26 +111,60 @@ void	parse_config_line(t_game *game, const char *line)
 		error_exit("Unknown identifier in config file", game);
 }
 
-static void	parse_lines(t_game *game)
+static int	is_empty_line(char *line)
 {
-	int		i;
-	int		map_started;
-	char	*line;
+	int	i;
 
 	i = 0;
+	if (!line)
+		return (1);
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void	process_map_line(t_game *game, char *line, int *map_started,
+		int *map_ended)
+{
+	if (*map_ended)
+		error_exit("Invalid line after map ended", game);
+	*map_started = 1;
+	add_map_line(&game->map_data, line);
+}
+
+static void	process_line(t_game *game, char *line, int *map_started,
+		int *map_ended)
+{
+	if (is_empty_line(line))
+	{
+		if (*map_started && !*map_ended)
+			*map_ended = 1;
+		return ;
+	}
+	if (is_map_line(line))
+		process_map_line(game, line, map_started, map_ended);
+	else if (!*map_started)
+		parse_config_line(game, line);
+	else
+		error_exit("Invalid line after map started", game);
+}
+
+static void	parse_lines(t_game *game)
+{
+	int	i;
+	int	map_started;
+	int	map_ended;
+
 	map_started = 0;
+	map_ended = 0;
+	i = 0;
 	while (game->file_content[i] != NULL)
 	{
-		line = game->file_content[i];
-		if (is_map_line(line))
-		{
-			map_started = 1;
-			add_map_line(&game->map_data, line);
-		}
-		else if (map_started)
-			error_exit("Invalid line after map started", game);
-		else
-			parse_config_line(game, line);
+		process_line(game, game->file_content[i], &map_started, &map_ended);
 		i++;
 	}
 }
