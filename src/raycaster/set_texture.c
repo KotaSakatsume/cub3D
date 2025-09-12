@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/12 16:07:58 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 16:26:23 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,10 @@
 static int	start_mlx(t_game *game)
 {
 	if (WINDOW_WIDTH < WINDOW_MIN_WIDTH || WINDOW_HEIGHT < WINDOW_MIN_HEIGHT)
-	{
-		perror("start_mlx : check your WINDOW_SIZE");
 		return (1);
-	}
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
-	{
-		perror("start_mlx : mlx_init");
 		return (1);
-	}
-	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
-	if (game->win == NULL)
-	{
-		perror("start_mlx : mlx_new_window");
-		return (1);
-	}
 	return (0);
 }
 
@@ -57,7 +45,7 @@ static void	set_start_player_posi(t_game *game)
 		game->player_dir_y = 1;
 	else
 	{
-		ft_printf("error : set_player\n");
+		ft_printf("Error\nset_player\n");
 		exit(1);
 	}
 	set_pp(game);
@@ -73,18 +61,26 @@ static void	destroy_inputed_image(t_game *game)
 
 int	set_texture(t_game *game)
 {
-	if (set_mlx_imgs_wall_data(game) == 1)
-	{
-		ft_printf("Error\n");
-		ft_printf("cant open wall data\n");
-		return (1);		
-	}
 	if (start_mlx(game) == 1)
 	{
-		ft_printf("Error\n");
-		ft_printf("cant start mlx\n");
-		destroy_inputed_image(game);
+		ft_printf("Error\ncant start mlx\n");
 		return (1);
+	}
+	if (set_mlx_imgs_wall_data(game) == 1)
+	{
+		ft_printf("Error\ncant open wall data\n");
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		return (1);		
+	}
+	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
+	if (game->win == NULL)
+	{
+		ft_printf("Error\ncant open wall data\n");
+		destroy_inputed_image(game);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		return (1);		
 	}
 	set_start_player_posi(game);
 	set_start_vision(game);
