@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 17:29:50 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 17:37:22 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,24 @@ typedef struct s_map
 //(hit_point = 0~1)
 typedef struct s_linedraw
 {
-	double			cameraX;
-	double			rayX;
-	double			rayY;
-	double			deltaX;
-	double			deltaY;
-	int				stepX;
-	int				stepY;
-	int				tileX;
-	int				tileY;
-	double			nextXtime;
-	double			nextYtime;
+	double			camera_x;
+	double			ray_x;
+	double			ray_y;
+	double			delta_x;
+	double			delta_y;
+	int				step_x;
+	int				step_y;
+	int				tile_x;
+	int				tile_y;
+	double			next_x_time;
+	double			next_y_time;
 	int				hit_side;
 	int				draw_wall_start;
 	int				draw_wall_end;
 	int				wall_height;
 	char			wall_side;
-	int				hit_X;
-	int				hit_Y;
+	int				hit_x;
+	int				hit_y;
 	double			distinct;
 	double			hit_point;
 }					t_linedraw;
