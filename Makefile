@@ -6,7 +6,7 @@
 #    By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/18 00:40:45 by mkuida            #+#    #+#              #
-#    Updated: 2025/09/11 20:40:20 by mkuida           ###   ########.fr        #
+#    Updated: 2025/09/12 17:20:09 by mkuida           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 # define core
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 
