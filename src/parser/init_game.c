@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:56:32 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/10 14:20:18 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 17:18:37 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ void	init_map(t_map *map)
 	map->player_x = -1;
 	map->player_y = -1;
 	map->player_dir = 'N';
+}
+
+static void	init_t_img(t_img *img)
+{
+	img->mlx_img = NULL;
+	img->addr = NULL;
+	img->width = 0;
+	img->height = 0;
+	img->bpp = 0;
+	img->line_len = 0;
+	img->endian= 0;
 }
 
 void	init_game(t_game *game)
@@ -40,4 +51,9 @@ void	init_game(t_game *game)
 	game->win = NULL;
 	game->file_content = NULL;
 	init_map(&game->map_data);
+	init_t_img(&game->north_img);
+	init_t_img(&game->east_img);
+	init_t_img(&game->west_img);
+	init_t_img(&game->south_img);
+	init_t_img(&game->screen);
 }
