@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/12 16:04:38 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 16:07:58 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ static void	destroy_inputed_image(t_game *game)
 int	set_texture(t_game *game)
 {
 	if (set_mlx_imgs_wall_data(game) == 1)
-		return (1);
+	{
+		ft_printf("Error\n");
+		ft_printf("cant open wall data\n");
+		return (1);		
+	}
 	if (start_mlx(game) == 1)
 	{
+		ft_printf("Error\n");
+		ft_printf("cant start mlx\n");
 		destroy_inputed_image(game);
 		return (1);
 	}
