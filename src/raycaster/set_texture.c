@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
+/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/12 16:51:35 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:10:05 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	set_texture(t_game *game)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
-		return (1);		
+		return (1);
 	}
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
 	if (game->win == NULL)
@@ -85,7 +85,7 @@ int	set_texture(t_game *game)
 		destroy_inputed_image(game);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
-		return (1);		
+		return (1);
 	}
 	set_start_player_posi(game);
 	set_start_vision(game);

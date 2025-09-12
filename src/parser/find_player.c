@@ -6,11 +6,23 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/09 16:56:46 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:06:34 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+int	check_extension(const char *filename, const char *extension)
+{
+	size_t	len;
+
+	if (!filename)
+		return (0);
+	len = strlen(filename);
+	if (len < 4 || strncmp(filename + len - 4, extension, 5))
+		return (0);
+	return (1);
+}
 
 void	enqueue(t_queue **head, int x, int y)
 {

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ray_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
+/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:26:49 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/12 17:37:22 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:10:18 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int max(int x, int y)
+int	max(int x, int y)
 {
 	if (x >= y)
 		return (x);
@@ -20,7 +20,7 @@ int max(int x, int y)
 		return (y);
 }
 
-int min(int x, int y)
+int	min(int x, int y)
 {
 	if (x >= y)
 		return (y);
@@ -28,9 +28,9 @@ int min(int x, int y)
 		return (x);
 }
 
-void free_game(t_game *game)
+void	free_game(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	free(game->north_texture);
@@ -46,7 +46,7 @@ void free_game(t_game *game)
 	free(game);
 }
 
-void destroy_all_image(t_game *game)
+void	destroy_all_image(t_game *game)
 {
 	mlx_destroy_image(game->mlx, game->north_img.mlx_img);
 	mlx_destroy_image(game->mlx, game->east_img.mlx_img);
@@ -55,13 +55,13 @@ void destroy_all_image(t_game *game)
 	mlx_destroy_image(game->mlx, game->screen.mlx_img);
 }
 
-void print_line(t_linedraw *line, int X)
+void	print_line(t_linedraw *line, int X)
 {
 	ft_printf("print line start: X = %d\n", X);
-	ft_printf("ray_x = %f : ray_y = %f : camera = %f\n", line->ray_x, line->ray_y,
-			  line->camera_x);
+	ft_printf("ray_x = %f : ray_y = %f : camera = %f\n", line->ray_x,
+		line->ray_y, line->camera_x);
 	ft_printf("draw_wall_start = %d : draw_wall_end = %d : wall_height = %d\n",
-			  line->draw_wall_start, line->draw_wall_end, line->wall_height);
+		line->draw_wall_start, line->draw_wall_end, line->wall_height);
 	ft_printf("wall_side = %c\n", line->wall_side);
 	ft_printf("hit_x = %d : hit_y = %d\n", line->hit_x, line->hit_y);
 	ft_printf("distinct = %f\n", line->distinct);

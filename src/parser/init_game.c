@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
+/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:56:32 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 17:18:37 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:07:18 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	init_t_img(t_img *img)
 	img->height = 0;
 	img->bpp = 0;
 	img->line_len = 0;
-	img->endian= 0;
+	img->endian = 0;
 }
 
 void	init_game(t_game *game)

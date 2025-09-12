@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
+/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 17:37:22 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 18:06:52 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,17 @@ void				parse_texture(t_game *game, const char *path,
 						char **texture_path);
 void				parse_color(t_game *game, const char *color_str,
 						int *color);
+int					is_empty_line(char *line);
+const char			*skip_spaces(const char *s);
+int					is_map_line(char *line);
+void				add_map_line(t_map *map, const char *line);
+int					check_extension(const char *filename,
+						const char *extension);
 
 // parser_inti_game
 void				init_game(t_game *game);
 
 char				*get_next_line(int fd);
-// int			ft_putc(t_string *str, char c);
-// char		ft_getc(int fd);
-// int			extend_capacity(t_string *str);
 
 // parser_ft_split.c
 char				**ft_split(char const *s, char c);

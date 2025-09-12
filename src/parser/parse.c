@@ -6,84 +6,34 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:02:17 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 13:48:07 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:04:34 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	print_map(t_map *map)
-{
-	int	y;
-	int	x;
+// void	add_map_line(t_map *map, const char *line)
+// {
+// 	char	**new_map;
+// 	int		i;
 
-	if (!map || !map->map)
-		return ;
-	printf("Map (width: %d, height: %d):\n", map->width, map->height);
-	y = 0;
-	while (y < map->height)
-	{
-		x = 0;
-		while (x < map->width)
-		{
-			if (x < (int)ft_strlen(map->map[y]))
-				putchar(map->map[y][x]);
-			else
-				putchar(' ');
-			x++;
-		}
-		putchar('\n');
-		y++;
-	}
-}
-
-static const char	*skip_spaces(const char *s)
-{
-	while (*s == ' ' || *s == '\t')
-		s++;
-	return (s);
-}
-
-int	is_map_line(char *line)
-{
-	int	i;
-
-	if (!line || line[0] == '\0')
-		return (0);
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (!(line[i] == '1' || line[i] == '0' || line[i] == 'N'
-				|| line[i] == 'S' || line[i] == 'E' || line[i] == 'W'
-				|| line[i] == ' '))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	add_map_line(t_map *map, const char *line)
-{
-	char	**new_map;
-	int		i;
-
-	new_map = malloc(sizeof(char *) * (map->height + 2));
-	if (!new_map)
-		error_exit("Malloc failed for map", NULL);
-	i = 0;
-	while (i < map->height)
-	{
-		new_map[i] = map->map[i];
-		i++;
-	}
-	new_map[i] = ft_strdup(line);
-	if (!new_map[i])
-		error_exit("Malloc failed for map line", NULL);
-	new_map[i + 1] = NULL;
-	free(map->map);
-	map->map = new_map;
-	map->height++;
-}
+// 	new_map = malloc(sizeof(char *) * (map->height + 2));
+// 	if (!new_map)
+// 		error_exit("Malloc failed for map", NULL);
+// 	i = 0;
+// 	while (i < map->height)
+// 	{
+// 		new_map[i] = map->map[i];
+// 		i++;
+// 	}
+// 	new_map[i] = ft_strdup(line);
+// 	if (!new_map[i])
+// 		error_exit("Malloc failed for map line", NULL);
+// 	new_map[i + 1] = NULL;
+// 	free(map->map);
+// 	map->map = new_map;
+// 	map->height++;
+// }
 
 void	parse_config_line(t_game *game, const char *line)
 {
@@ -109,22 +59,6 @@ void	parse_config_line(t_game *game, const char *line)
 		add_map_line(&game->map_data, line);
 	else
 		error_exit("Unknown identifier in config file", game);
-}
-
-static int	is_empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (!line)
-		return (1);
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 static void	process_map_line(t_game *game, char *line, int *map_started,
@@ -185,15 +119,3 @@ int	parse_file(t_game *game, char *filename)
 	free_file_content(game->file_content);
 	return (1);
 }
-
-/*	// printf("NO : %s\n", game->north_texture);
-	// printf("SO : %s\n", game->south_texture);
-	// printf("WE : %s\n", game->west_texture);
-	// printf("EA : %s\n", game->east_texture);
-	// printf("F  : %d\n", game->floor_color);
-	// printf("C  : %d\n", game->ceiling_color);
-	// print_map(&game->map_data);
-	// printf("=====Player position set=====\n");
-	// printf("X: %d\n", game->map_data.player_x);
-	// printf("Y: %d\n", game->map_data.player_y);
-	// printf("Direction: %c\n", game->map_data.player_dir);*/
