@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
+/*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 16:06:43 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 17:08:26 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,11 @@ int	main(int argc, char **argv)
 
 	game = (t_game *)malloc(sizeof(t_game));
 	if (!game)
-		return (fprintf(stderr, "Memory allocation failed\n"), 1);
+		return (write(2, "Memory allocation failed\n", 25));
 	if (argc != 2)
-		return (error_exit("Usage: ./cub3d <map.cub>\n", game), 1);
+		return (free(game), write(2, "Usage: ./cub3d <map.cub>\n", 25), 1);
 	if (!check_extension(argv[1], ".cub"))
-		return (error_exit("File must have .cub extension\n", game), 1);
+		return (free(game), write(2, "File must have .cub extension\n", 30));
 	init_game(game);
 	if (!parse_file(game, argv[1]))
 		return (1); // parse_file内でエラーメッセージは出力済み
@@ -142,15 +142,13 @@ int	main(int argc, char **argv)
 	// 	free(game->map_data.map[i]);
 	// free(game->map_data.map);
 	// free(game);
-	if(set_texture(game) == 1)
+	if (set_texture(game) == 1)
 	{
 		free_game(game);
 		return (1);
 	}
-
-	//hookの設定
+	// hookの設定
 	set_mlx_hook(game);
-
 	//画面描画ループ
 	mlx_loop(game->mlx);
 	return (0);
