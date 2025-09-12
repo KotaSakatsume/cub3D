@@ -6,139 +6,113 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/11 20:09:24 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 17:29:50 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-# include <stdbool.h>
+# include "libft.h"
+# include "mlx.h"
 # include <X11/X.h>
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
+# include <fcntl.h>
+# include <math.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-# include "libft.h"
-# include "mlx.h"
 
+# define FOV 90.0
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
+# define WINDOW_MIN_WIDTH 100
+# define WINDOW_MIN_HEIGHT 100
+# define ROTATE_SPEED_DEGREE 1
+# define MOVE_SPEED 1
+# define EXIT_FAILURE 1
 
-#define FOV (double)90.0
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
-#define WINDOW_MIN_WIDTH 100
-#define WINDOW_MIN_HEIGHT 100
-#define ROTATE_SPEED_DEGREE 1
-#define MOVE_SPEED 1
-#define EXIT_FAILURE 1
+// struct
 
-//map関連の情報まとめ
+// for_map
+//(width=x,height=y)
 typedef struct s_map
 {
-    char        **map; // 二次元配列でマップを保持
-    int         width;    //x
-    int         height;   //y
-    int         player_x; //yoko
-    int         player_y; //tate
-    char        player_dir;//N S E W
+	char			**map;
+	int				width;
+	int				height;
+	int				player_x;
+	int				player_y;
+	char			player_dir;
+}					t_map;
 
-}   t_map; 
-
+// for_raycast
+//(hit_point = 0~1)
 typedef struct s_linedraw
 {
-	//初期条件
-	double		cameraX;
-	double		rayX;
-	double		rayY;
+	double			cameraX;
+	double			rayX;
+	double			rayY;
+	double			deltaX;
+	double			deltaY;
+	int				stepX;
+	int				stepY;
+	int				tileX;
+	int				tileY;
+	double			nextXtime;
+	double			nextYtime;
+	int				hit_side;
+	int				draw_wall_start;
+	int				draw_wall_end;
+	int				wall_height;
+	char			wall_side;
+	int				hit_X;
+	int				hit_Y;
+	double			distinct;
+	double			hit_point;
+}					t_linedraw;
 
-	//中間条件
-	double		deltaX;
-	double		deltaY;
-
-	int stepX;
-	int stepY;
-	int tileX;
-	int tileY;
-
-	double nextXtime;
-	double nextYtime;
-
-	//結果
-	int 		hit_side;
-	int			draw_wall_start; //
-	int			draw_wall_end; //
-	int			wall_height; //
-
-	char		wall_side;//
-
-	int			hit_X;	//
-	int			hit_Y;	//
-
-	double		distinct; //
-	
-	double		hit_point; //0~1
-}	t_linedraw;
-
-//mlb用の画像ファイル保管場所
+// for minilib
 typedef struct s_img
 {
-    void            *mlx_img;
-    char            *addr;
-    int                width;
-    int                height;
-    int                bpp;
-    int                line_len;
-    int                endian;
-}                    t_img;
+	void			*mlx_img;
+	char			*addr;
+	int				width;
+	int				height;
+	int				bpp;
+	int				line_len;
+	int				endian;
+}					t_img;
 
+// for all
+// fllor_color contain RGB
 typedef struct s_game
 {
-
-	// ★　↓いったんコメントアウトで変更前残しつつ変更
-    // // マップ情報へのポインタ
-    // char        **map_data;
-    // int         map_width;
-    // int         map_height;
-	//　★　↑ここまで
-
-	//　いったん以下に変更
-	t_map		map_data;
-
-    // プレイヤー情報
-    double      player_pos_x;
-    double      player_pos_y;
-    double      player_dir_x;
-    double      player_dir_y;
-    double      player_plane_x;
-    double      player_plane_y;
-
-    // テクスチャと色情報
-    char        *north_texture;
-    char        *south_texture;
-    char        *east_texture;
-    char        *west_texture;
-    int         floor_color; // 例: RGB値をまとめた整数
-    int         ceiling_color;
-
-    // MiniLibX関連
-    void        *mlx;
-    void        *win;
-
-    //以下新構造体、私の担当部分で作成します。
-    t_img        north_img;    //mkuida
-    t_img        south_img;    //mkuida
-    t_img        east_img;    //mkuida
-    t_img        west_img;    //mkuida
-	t_img		screen;		//tuika
-
-	// kosakats追加
+	t_map			map_data;
+	double			player_pos_x;
+	double			player_pos_y;
+	double			player_dir_x;
+	double			player_dir_y;
+	double			player_plane_x;
+	double			player_plane_y;
+	char			*north_texture;
+	char			*south_texture;
+	char			*east_texture;
+	char			*west_texture;
+	int				floor_color;
+	int				ceiling_color;
+	void			*mlx;
+	void			*win;
+	t_img			north_img;
+	t_img			south_img;
+	t_img			east_img;
+	t_img			west_img;
+	t_img			screen;
 	char			**file_content;
-	
-}   t_game;
+}					t_game;
 
 typedef struct s_queue
 {
@@ -203,53 +177,52 @@ void				free_visited(int **visited, int height);
 int					is_valid_char(char c);
 int					is_player(char c);
 
+// raycaster
 
-//raycaster
+// raycaster_DDA.c
+void				dda(t_linedraw *line, t_game *game);
 
-//raycaster_DDA.c
-void	dda(t_linedraw *line, t_game *game);
+// raycaster_hook_move_player.c
+int					move_w_player(t_game *game);
+int					move_a_player(t_game *game);
+int					move_s_player(t_game *game);
+int					move_d_player(t_game *game);
 
-//raycaster_hook_move_player.c
-int		move_w_player(t_game *game);
-int		move_a_player(t_game *game);
-int		move_s_player(t_game *game);
-int		move_d_player(t_game *game);
+// raycaster_hook_ritate_player.c
+int					rotate_player_left(t_game *game);
+int					rotate_player_right(t_game *game);
 
-//raycaster_hook_ritate_player.c
-int		rotate_player_left(t_game *game);
-int		rotate_player_right(t_game *game);
+// raycaster_init_line.c
+void				init_line(t_linedraw *line, int X, t_game *game);
+void				free_game(t_game *game);
 
-//raycaster_init_line.c
-void	init_line(t_linedraw *line, int X, t_game *game);
-void	free_game(t_game *game);
+// raycaster_line_asset.c
+void				set_line_by_dda(t_game *game, t_linedraw *line);
 
-//raycaster_line_asset.c
-void	set_line_by_dda(t_game *game, t_linedraw *line);
+// raycaster_my_mlx.c
+void				my_mlx_pixel_put(t_img *data, int x, int y, int color);
+int					my_mlx_pixel_get(t_img *data, int x, int y);
 
-//raycaster_my_mlx.c
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-int		my_mlx_pixel_get(t_img *data, int x, int y);
+// raycaster_ray_util.c
+int					max(int x, int y);
+int					min(int x, int y);
+void				free_game(t_game *game);
+void				destroy_all_image(t_game *game);
+void				print_line(t_linedraw *line, int X);
 
-//raycaster_ray_util.c
-int		max(int x, int y);
-int		min(int x, int y);
-void	free_game(t_game *game);
-void	destroy_all_image(t_game *game);
-void	print_line(t_linedraw *line, int X);
+// raycaster_set_mlx_hook.c
+void				set_mlx_hook(t_game *game);
 
-//raycaster_set_mlx_hook.c
-void	set_mlx_hook(t_game *game);
+// raycaster_set_test.c
+int					set_test(t_game *game);
 
-//raycaster_set_test.c
-int		set_test(t_game *game);
+// raycaster_set_textur.c
+int					set_texture(t_game *game);
 
-//raycaster_set_textur.c
-int		set_texture(t_game *game);
+// raycaster_set_start_vision.c
+void				set_start_vision(t_game *game);
 
-//raycaster_set_start_vision.c
-void	set_start_vision(t_game *game);
-
-//raycaster_set_xml_imgs_wall_data.c
-int		set_mlx_imgs_wall_data(t_game *game);
+// raycaster_set_xml_imgs_wall_data.c
+int					set_mlx_imgs_wall_data(t_game *game);
 
 #endif
