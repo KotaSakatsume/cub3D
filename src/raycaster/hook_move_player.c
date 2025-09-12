@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_player.c                                      :+:      :+:    :+:   */
+/*   hook_move_player.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 01:51:48 by mkuida            #+#    #+#             */
-/*   Updated: 2025/08/28 01:51:48 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 17:10:57 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static bool	can_go_xy(t_game *game, double x, double y)
 		return (false);
 	int_x = (int)x;
 	int_y = (int)y;
-	printf("x = %f : int_x = %d : y = %f : int_y = %d\n", x, int_x, y, int_y);
+	ft_printf("x = %f : int_x = %d : y = %f : int_y = %d\n", x, int_x, y, int_y);
 	if (game->map_data.map[int_y][int_x] == '1')
 	{
-		printf("map[int_y][int_x] = %c\n", game->map_data.map[int_y][int_x]);
+		ft_printf("map[int_y][int_x] = %c\n", game->map_data.map[int_y][int_x]);
 		return (false);
 	}
 	return (true);

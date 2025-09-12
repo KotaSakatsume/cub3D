@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:39:29 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/11 16:20:00 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 17:10:50 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static bool	check_hit_wall(t_map *map, int X, int Y)
 static void	out_map(t_game *game, t_linedraw *line)
 {
 	(void)*game;
-	printf("error : out  map\n");
-	printf("(line->tileX) = %d , (line->tileY) = %d\n", (line->tileX),
+	ft_printf("error : out  map\n");
+	ft_printf("(line->tileX) = %d , (line->tileY) = %d\n", (line->tileX),
 		(line->tileY));
 	exit(1);
 }
