@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/09 12:14:54 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 11:04:47 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	**init_visited(int width, int height)
 	y = 0;
 	while (y < height)
 	{
-		visited[y] = calloc(width, sizeof(int));
+		visited[y] = ft_calloc(width, sizeof(int));
 		y++;
 	}
 	return (visited);

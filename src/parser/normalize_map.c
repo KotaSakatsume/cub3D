@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/09 17:00:01 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 11:01:59 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_max_width(char **map)
 	max_len = 0;
 	while (map[i] != NULL)
 	{
-		len = strlen(map[i]);
+		len = ft_strlen(map[i]);
 		if (len > max_len)
 			max_len = len;
 		i++;
@@ -36,7 +36,7 @@ static void	pad_line(t_map *map, int index, int max_len)
 	int		j;
 	char	*new_line;
 
-	len = strlen(map->map[index]);
+	len = ft_strlen(map->map[index]);
 	if (len < max_len)
 	{
 		new_line = malloc(sizeof(char) * (max_len + 1));

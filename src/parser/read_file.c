@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/10 14:31:43 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 11:04:31 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static char	**resize_content(char **file_content, int *capacity, int count)
 	int		new_capacity;
 	int		i;
 
-	new_capacity = (*capacity == 0) ? 10 : (*capacity * 2);
+	if (*capacity == 0)
+		new_capacity = 10;
+	else
+		new_capacity = *capacity * 2;
 	new_content = malloc(sizeof(char *) * (new_capacity + 1));
 	if (!new_content)
 		return (NULL);
@@ -44,7 +47,7 @@ char	**add_line(char **file_content, int *count, int *capacity, char *line)
 	}
 	if (line)
 	{
-		file_content[*count] = strdup(line);
+		file_content[*count] = ft_strdup(line);
 		if (!file_content[*count])
 			return (NULL);
 		(*count)++;
@@ -57,7 +60,7 @@ static char	*process_line(char *line)
 {
 	size_t	len;
 
-	len = strlen(line);
+	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
 		line[len - 1] = '\0';
 	return (line);
