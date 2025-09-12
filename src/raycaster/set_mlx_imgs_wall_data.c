@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_xml_imgs_wall_data.c                           :+:      :+:    :+:   */
+/*   set_mlx_imgs_wall_data.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 10:13:34 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/11 16:22:16 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 16:47:52 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ static int	set_img_data(t_game *game, char *xpm_path, t_img *full_data)
 			&(full_data->width), &(full_data->height));
 	if (full_data->mlx_img == NULL)
 	{
-		ft_printf("set_img_data : can't change mlx_xpm_file_to_image");
-		ft_printf("(xpm_path = \n)", xpm_path);
+		ft_printf("Error\n");
+		ft_printf("set_img_data : can't change mlx_xpm_file_to_image\n");
+		ft_printf("(xpm_path = %s)\n", xpm_path);
 		return (1);
 	}
 	full_data->addr = mlx_get_data_addr(full_data->mlx_img, &(full_data->bpp),
 			&(full_data->line_len), &(full_data->endian));
 	if (full_data->addr == NULL)
 	{
-		perror("set_img_data : mlx_get_data_addr\n");
+		ft_printf("Error\n");
+		ft_printf("set_img_data : can't change mlx_xpm_file_to_image\n");
 		mlx_destroy_image(game->mlx, full_data);
 		return (1);
 	}
