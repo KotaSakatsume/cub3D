@@ -6,34 +6,11 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:02:17 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 18:04:34 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:20:28 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-// void	add_map_line(t_map *map, const char *line)
-// {
-// 	char	**new_map;
-// 	int		i;
-
-// 	new_map = malloc(sizeof(char *) * (map->height + 2));
-// 	if (!new_map)
-// 		error_exit("Malloc failed for map", NULL);
-// 	i = 0;
-// 	while (i < map->height)
-// 	{
-// 		new_map[i] = map->map[i];
-// 		i++;
-// 	}
-// 	new_map[i] = ft_strdup(line);
-// 	if (!new_map[i])
-// 		error_exit("Malloc failed for map line", NULL);
-// 	new_map[i + 1] = NULL;
-// 	free(map->map);
-// 	map->map = new_map;
-// 	map->height++;
-// }
 
 void	parse_config_line(t_game *game, const char *line)
 {

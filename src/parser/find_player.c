@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:07:57 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 18:06:34 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:19:38 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	check_extension(const char *filename, const char *extension)
 
 	if (!filename)
 		return (0);
-	len = strlen(filename);
-	if (len < 4 || strncmp(filename + len - 4, extension, 5))
+	len = ft_strlen(filename);
+	if (len < 4 || ft_strncmp(filename + len - 4, extension, 5))
 		return (0);
 	return (1);
 }

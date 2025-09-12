@@ -6,7 +6,7 @@
 /*   By: kosakats <kosakats@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 13:03:06 by kotasakatsu       #+#    #+#             */
-/*   Updated: 2025/09/12 18:09:26 by kosakats         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:23:30 by kosakats         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	error_exit(char *message, t_game *game)
 	write(2, "Error\n", 6);
 	if (message)
 	{
-		write(2, message, strlen(message));
+		write(2, message, ft_strlen(message));
 		write(2, "\n", 1);
 	}
 	if (game)
@@ -74,18 +74,6 @@ void	error_exit(char *message, t_game *game)
 	}
 	exit(1);
 }
-
-// int	check_extension(const char *filename, const char *extension)
-// {
-// 	size_t	len;
-
-// 	if (!filename)
-// 		return (0);
-// 	len = strlen(filename);
-// 	if (len < 4 || strncmp(filename + len - 4, extension, 5))
-// 		return (0);
-// 	return (1);
-// }
 
 int	main(int argc, char **argv)
 {
