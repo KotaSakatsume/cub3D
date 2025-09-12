@@ -6,7 +6,7 @@
 /*   By: mkuida <reprise39@yahoo.co.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:08:36 by mkuida            #+#    #+#             */
-/*   Updated: 2025/09/11 16:23:20 by mkuida           ###   ########.fr       */
+/*   Updated: 2025/09/12 16:04:38 by mkuida           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,21 @@ static void	set_start_player_posi(t_game *game)
 	set_pp(game);
 }
 
+static void	destroy_inputed_image(t_game *game)
+{
+	mlx_destroy_image(game->mlx, game->north_img.mlx_img);
+	mlx_destroy_image(game->mlx, game->east_img.mlx_img);
+	mlx_destroy_image(game->mlx, game->west_img.mlx_img);
+	mlx_destroy_image(game->mlx, game->south_img.mlx_img);
+}
+
 int	set_texture(t_game *game)
 {
-	if (start_mlx(game) == 1)
-		return (1);
 	if (set_mlx_imgs_wall_data(game) == 1)
+		return (1);
+	if (start_mlx(game) == 1)
 	{
-		mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
+		destroy_inputed_image(game);
 		return (1);
 	}
 	set_start_player_posi(game);
